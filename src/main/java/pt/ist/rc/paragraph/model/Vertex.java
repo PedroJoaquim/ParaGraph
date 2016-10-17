@@ -1,58 +1,27 @@
 package pt.ist.rc.paragraph.model;
 
-import java.util.Iterator;
-
-/**
- * Created by Pedro Joaquim.
- */
-
-public abstract class Vertex<VV, EV, MV> {
+public class Vertex<VV, EV> {
 
     /*
-     * Vertex Identifier
+     * Vertex Property
      */
-    private int id;
+    private VV value;
 
     /*
      * Vertex outgoing edges
      */
     private Edge<EV>[] outEdges;
 
-    /*
-     * Vertex computational value
-     */
-    private VV value;
-
-    public Vertex(int id, Edge<EV>[] outEdges) {
-        this.id = id;
+    public Vertex(VV value, Edge<EV>[] outEdges) {
+        this.value = value;
         this.outEdges = outEdges;
-        this.value = initialValue();
-    }
-
-    public abstract void compute(Iterator<Message<MV>> msgs);
-    public abstract VV initialValue();
-
-    public void voteToHalt() {
-        //todo
-    }
-
-    public void sendMessageTo(int targetID, MV msg){
-        //todo
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public VV getValue() {
         return value;
     }
 
-    public void setValue(VV value) {
-        this.value = value;
+    public Edge<EV>[] getOutEdges() {
+        return outEdges;
     }
 }

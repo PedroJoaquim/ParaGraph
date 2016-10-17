@@ -1,4 +1,6 @@
-package pt.ist.rc.paragraph;
+package pt.ist.rc.paragraph.repl;
+
+import pt.ist.rc.paragraph.model.GraphData;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +17,8 @@ public class ParaGraphREPL {
 
     public static void main(String[] args) {
         BufferedReader br = null;
+
+
 
         try {
 
@@ -50,7 +54,7 @@ public class ParaGraphREPL {
 
         switch (splitedCMD[0]) {
             case EXIT_CMD: System.out.println("Bye!"); System.exit(0);
-            case LOAD_CMD: /* todo */ break;
+            case LOAD_CMD: break;
             default: System.out.print("Invalid Command");
         }
 
