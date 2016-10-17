@@ -1,28 +1,40 @@
 package pt.ist.rc.paragraph.computation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Pedro Joaquim.
  */
 public class InboxMessages<MV> {
 
-    private List<Message<MV>> messages;
+    private ConcurrentHashMap<Integer, List<MV>> messages;
 
     public InboxMessages() {
-        this.messages = new ArrayList<>();
+        this.messages = new ConcurrentHashMap<>();
+
     }
 
-    public void addMessage(Message<MV> msg){
-        messages.add(msg);
+    public void addMessageTo(Integer targetVertxID, MV msg){
+        if(!messages.containsKey(targetVertxID)){
+            messages.put(targetVertxID, new ArrayList<MV>());
+        }
+
+        messages.get(targetVertxID).add(msg);
     }
 
     public void clearInbox(){
-        this.messages = new ArrayList<>();
+       for(Integer key : messages.keySet()){
+           messages.get(key).clear();
+       }
     }
 
-    public List<Message<MV>> getMessages(){
-        return this.messages;
+    public List<MV> getMessages(Integer targetVertxID){
+        if(!messages.containsKey(targetVertxID)){
+            messages.put(targetVertxID, new ArrayList<MV>());
+        }
+
+        return messages.get(targetVertxID);
     }
+
 }

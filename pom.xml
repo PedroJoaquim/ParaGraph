@@ -22,7 +22,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>pt.ist.rc.paragraph.ParaGraphREPL</mainClass>
+                    <mainClass>pt.ist.rc.paragraph.repl.ParaGraphREPL</mainClass>
                 </configuration>
             </plugin>
             <plugin>
