@@ -15,6 +15,11 @@ public class GraphData<VV, EV> {
         loadGraphData(inputDataFile, loadVertexDataFunction, loadEdgeDataFunction);
     }
 
+    // for toy graphs
+    public GraphData(Vertex<VV, EV>[] vertices){
+        this.vertices = vertices;
+    }
+
     private void loadGraphData(File inputDataFile, Function<String, VV> loadVertexDataFunction, Function<String, EV> loadEdgeDataFunction) {
         /*Load Graph Data Here (create vertices and edges arrays)
 

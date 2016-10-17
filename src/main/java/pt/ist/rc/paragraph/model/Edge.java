@@ -1,6 +1,6 @@
 package pt.ist.rc.paragraph.model;
 
-public abstract class Edge<EV> {
+public class Edge<EV> {
 
     /*
      * Edge target vertex
