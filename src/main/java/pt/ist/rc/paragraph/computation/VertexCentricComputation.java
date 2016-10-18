@@ -39,7 +39,7 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
 
         vertexComputationalValue =  (VCV[]) new Object[numVertices]; //small hack
 
-        for (int i = 0; i < numVertices - 1; i++) {
+        for (int i = 0; i < numVertices; i++) {
             vertexComputationalValue[i] = initializeValue(i);
         }
     }
@@ -49,8 +49,10 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
     public abstract void compute(int vertexID, List<MV> messages);
 
     public void workerCompute(int vertexID){
-        List<MV> messages = inboxMessages.getMessages(vertexID);
-        compute(vertexID, messages);
+        if(activeVertices.contains(graphData.getVertex(vertexID))){
+            List<MV> messages = inboxMessages.getMessages(vertexID);
+            compute(vertexID, messages);
+        }
     }
 
     /*
@@ -170,9 +172,20 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
     private void activateVerticesThatReceivedMessages(){
 
         for (int i = 0; i < numVertices; i++) {
-            if(!inboxMessages.getMessages(i).isEmpty()){
+            if(!nextStepInboxMessages.getMessages(i).isEmpty()){
                 this.activeVertices.add(graphData.getVertex(i));
             }
         }
+    }
+
+    public Map<Integer, VCV> getVertexComputationalValues(){
+
+        HashMap<Integer, VCV> result = new HashMap<>();
+
+        for (int i = 0; i < getNumVertices(); i++) {
+            result.put(i, getValue(i));
+        }
+
+        return result;
     }
 }
