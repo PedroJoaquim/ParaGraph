@@ -136,7 +136,7 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
         }
     }
 
-    private int[] assignPartitionToWorker(int workerID) {
+    protected int[] assignPartitionToWorker(int workerID) {
 
         int[] result = new int[2];
 
