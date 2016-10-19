@@ -30,8 +30,9 @@ public class ToyGraph2 {
         vertice0Edges[0] = new Edge<>(1, 4);
         vertice0Edges[1] = new Edge<>(2, 15);
 
-        Edge<Integer>[] vertice1Edges = new Edge[1];
+        Edge<Integer>[] vertice1Edges = new Edge[2];
         vertice1Edges[0] = new Edge<>(2, 5);
+        vertice1Edges[1] = new Edge<>(3, 10);
 
 
         Edge<Integer>[] vertice2Edges = new Edge[1];

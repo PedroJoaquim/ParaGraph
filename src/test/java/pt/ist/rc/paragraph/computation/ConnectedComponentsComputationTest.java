@@ -6,6 +6,7 @@ import org.junit.Test;
 import pt.ist.rc.paragraph.analytics.ConnectedComponentsComputation;
 import pt.ist.rc.paragraph.model.GraphData;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph1;
+import pt.ist.rc.paragraph.toygraphs.ToyGraph2;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,6 @@ public class ConnectedComponentsComputationTest {
     private static final int NUM_WORKERS = 4;
 
     private static GraphData<Void, Void> graph1;
-
 
     @BeforeClass
     public static void oneTimeInit() {
@@ -41,7 +41,7 @@ public class ConnectedComponentsComputationTest {
 
         for (Map.Entry<Integer, List<Integer>> entry : ccc.getVerticesGroups().entrySet()) {
 
-            if(entry.getKey() == 0){
+            if (entry.getKey() == 0) {
 
                 Assert.assertTrue(entry.getValue().contains(0));
                 Assert.assertTrue(entry.getValue().contains(1));

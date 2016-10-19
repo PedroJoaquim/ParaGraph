@@ -141,24 +141,24 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
     protected int[] assignPartitionToWorker(int workerID) {
 
         int[] result = new int[2];
+        int numWorkers = config.getNumWorkers();
 
-        if(graphData.getVertices().length < config.getNumWorkers()){
+        if(graphData.getVertices().length < numWorkers){
+            numWorkers = graphData.getVertices().length;
+        }
 
-            if(workerID > 0){
-                result[0] = -1;
-                result[1] = -1;
-            } else {
+        if(workerID >= numWorkers){
 
-                result[0] = 0;
-                result[1] = graphData.getVertices().length;
-            }
+            result[0] = -1;
+            result[1] = -1;
+
         } else {
 
-            int partitionSize = graphData.getVertices().length / config.getNumWorkers();
+            int partitionSize = graphData.getVertices().length / numWorkers;
 
             result[0] = workerID * partitionSize;
 
-            if(workerID == config.getNumWorkers() -1){
+            if(workerID == numWorkers -1){
 
                 result[1] = graphData.getVertices().length;
             } else {

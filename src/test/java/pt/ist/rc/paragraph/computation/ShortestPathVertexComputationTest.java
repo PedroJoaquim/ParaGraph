@@ -51,8 +51,5 @@ public class ShortestPathVertexComputationTest {
         Assert.assertEquals(14, distances.get(3).intValue());
         Assert.assertEquals(12, distances.get(4).intValue());
         Assert.assertEquals(25, distances.get(5).intValue());
-
-
-
     }
 }

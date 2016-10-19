@@ -25,19 +25,22 @@ public class ParaGraphWorker  {
 
     public void run(){
 
-        workerThread = new Thread(){
-            public void run(){
-                for (int i = from; i < to; i++) {
-                    vertexComputation.workerCompute(i);
+        if(from != -1 && to != -1){
+            workerThread = new Thread(){
+                public void run(){
+                    for (int i = from; i < to; i++) {
+                        vertexComputation.workerCompute(i);
+                    }
                 }
-            }
-        };
+            };
 
-        workerThread.start();
+            workerThread.start();
+        }
+
     }
 
     public void await() throws InterruptedException {
-        workerThread.join();
+        if(from != -1 && to != -1){ workerThread.join(); }
     }
 
 }
