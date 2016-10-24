@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import pt.ist.rc.paragraph.analytics.ConnectedComponentsComputation;
+import pt.ist.rc.paragraph.exceptions.ParaGraphComputationException;
 import pt.ist.rc.paragraph.model.GraphData;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph1;
-import pt.ist.rc.paragraph.toygraphs.ToyGraph2;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class ConnectedComponentsComputationTest {
     }
 
     @Test
-    public void testCCC() throws InterruptedException {
+    public void testCCC() throws ParaGraphComputationException {
 
         ConnectedComponentsComputation ccc = new ConnectedComponentsComputation(graph1, new ComputationConfig().setNumWorkers(NUM_WORKERS));
 

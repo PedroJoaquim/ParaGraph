@@ -5,7 +5,6 @@ import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.GraphData;
-import pt.ist.rc.paragraph.model.Vertex;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,15 +28,13 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Voi
     @Override
     public void compute(ComputationalVertex<Void, Void, Integer, Integer> vertex) {
 
-        if(getSuperstep() == 0){
+        if(getSuperStep() == 0){
 
-            for (Edge<Void> edge: vertex.getOutEdges()) {
-                sendMessageTo(edge.getTarget(), vertex.getId());
-            }
+            sendMessageToAllOutNeighbors(vertex, vertex.getId());
 
         } else {
 
-            int minValue = vertex.getId();
+            int minValue = vertex.getComputationalValue();
 
             for (Integer msg : vertex.getMessages()) {
                 if (msg < minValue){
@@ -49,9 +46,7 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Voi
 
                 vertex.setComputationalValue(minValue);
 
-                for (Edge<Void> edge: vertex.getOutEdges()) {
-                    sendMessageTo(edge.getTarget(), vertex.getId());
-                }
+                sendMessageToAllOutNeighbors(vertex, minValue);
 
             } else {
 
@@ -64,12 +59,12 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Voi
 
         Map<Integer, List<Integer>> result = new HashMap<>();
 
-        Integer[] resultValues = getVertexComputationalValues();
+        List<Integer> resultValues = getVertexComputationalValues();
 
 
-        for (int i = 0; i < resultValues.length; i++) {
+        for (int i = 0; i < getNumVertices(); i++) {
 
-            Integer group = resultValues[i];
+            Integer group = resultValues.get(i);
 
             if(!result.containsKey(group)){
                 result.put(group, new ArrayList<>());
@@ -79,6 +74,5 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Voi
         }
 
         return result;
-
     }
 }

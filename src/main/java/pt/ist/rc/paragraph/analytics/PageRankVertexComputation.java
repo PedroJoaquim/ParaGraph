@@ -6,8 +6,6 @@ import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.GraphData;
 
-import java.util.List;
-
 /**
  * Created by Pedro Joaquim on 17-10-2016
  */
@@ -25,9 +23,9 @@ public class PageRankVertexComputation extends VertexCentricComputation<Void, Vo
     @Override
     public void compute(ComputationalVertex<Void, Void, Double, Double> vertex) {
 
-        int numOutEdges = vertex.getOutEdges().length;
+        int numOutEdges = vertex.getNumberOutEdges();
 
-        if(getSuperstep() > 0){
+        if(getSuperStep() > 0){
 
             double sum = 0;
 
@@ -38,11 +36,10 @@ public class PageRankVertexComputation extends VertexCentricComputation<Void, Vo
             vertex.setComputationalValue((0.15 / getNumVertices()) + 0.85 * sum);
         }
 
-        if(getSuperstep() < 30){
+        if(getSuperStep() < 30){
 
-            for (Edge<Void> outEdge: vertex.getOutEdges()) {
-                sendMessageTo(outEdge.getTarget(), vertex.getComputationalValue() / numOutEdges);
-            }
+            sendMessageToAllOutNeighbors(vertex, vertex.getComputationalValue() / numOutEdges);
+
         } else {
             
            vertex.voteToHalt();

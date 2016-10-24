@@ -4,6 +4,9 @@ import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.GraphData;
 import pt.ist.rc.paragraph.model.Vertex;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by Pedro Joaquim.
  */
@@ -48,13 +51,12 @@ public class ToyGraph2 {
 
         Edge<Integer>[] vertice5Edges = new Edge[0];
 
-
-        vertices[0] = new Vertex<>(null, vertice0Edges);
-        vertices[1] = new Vertex<>(null, vertice1Edges);
-        vertices[2] = new Vertex<>(null, vertice2Edges);
-        vertices[3] = new Vertex<>(null, vertice3Edges);
-        vertices[4] = new Vertex<>(null, vertice4Edges);
-        vertices[5] = new Vertex<>(null, vertice5Edges);
+        vertices[0] = new Vertex<>(null,  new ArrayList<>(Arrays.asList(vertice0Edges)));
+        vertices[1] = new Vertex<>(null,  new ArrayList<>(Arrays.asList(vertice1Edges)));
+        vertices[2] = new Vertex<>(null,  new ArrayList<>(Arrays.asList(vertice2Edges)));
+        vertices[3] = new Vertex<>(null,  new ArrayList<>(Arrays.asList(vertice3Edges)));
+        vertices[4] = new Vertex<>(null,  new ArrayList<>(Arrays.asList(vertice4Edges)));
+        vertices[5] = new Vertex<>(null,  new ArrayList<>(Arrays.asList(vertice5Edges)));
 
         return new GraphData<Void, Integer>(vertices);
     }

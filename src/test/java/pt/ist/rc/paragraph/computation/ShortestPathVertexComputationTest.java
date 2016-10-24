@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import pt.ist.rc.paragraph.analytics.ShortestPathVertexComputation;
+import pt.ist.rc.paragraph.exceptions.ParaGraphComputationException;
 import pt.ist.rc.paragraph.model.GraphData;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph2;
 
@@ -27,21 +28,21 @@ public class ShortestPathVertexComputationTest {
     }
 
     @Test
-    public void testSPV() throws InterruptedException {
+    public void testSPV() throws ParaGraphComputationException {
 
         ShortestPathVertexComputation spv = new ShortestPathVertexComputation(graph1, new ComputationConfig().setNumWorkers(NUM_WORKERS), 0);
         spv.execute();
 
 
-        Integer[] distances = spv.getVertexComputationalValues();
+        List<Integer> distances = spv.getVertexComputationalValues();
 
-        Assert.assertEquals(6, distances.length);
+        Assert.assertEquals(6, spv.getNumVertices());
 
-        Assert.assertEquals(0, distances[0].intValue());
-        Assert.assertEquals(4, distances[1].intValue());
-        Assert.assertEquals(9, distances[2].intValue());
-        Assert.assertEquals(14, distances[3].intValue());
-        Assert.assertEquals(12, distances[4].intValue());
-        Assert.assertEquals(25, distances[5].intValue());
+        Assert.assertEquals(0, distances.get(0).intValue());
+        Assert.assertEquals(4, distances.get(1).intValue());
+        Assert.assertEquals(9, distances.get(2).intValue());
+        Assert.assertEquals(14, distances.get(3).intValue());
+        Assert.assertEquals(12, distances.get(4).intValue());
+        Assert.assertEquals(25, distances.get(5).intValue());
     }
 }

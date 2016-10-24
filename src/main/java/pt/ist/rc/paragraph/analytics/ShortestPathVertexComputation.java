@@ -6,9 +6,7 @@ import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.GraphData;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Iterator;
 
 /**
  * Created by Pedro Joaquim on 17-10-2016
@@ -41,7 +39,10 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Void
 
             vertex.setComputationalValue(mindist);
 
-            for (Edge<Integer> edge: vertex.getOutEdges()) {
+            Iterator<Edge<Integer>> iterator = vertex.getOutEdgesIterator();
+
+            while (iterator.hasNext()){
+                Edge<Integer> edge = iterator.next();
                 sendMessageTo(edge.getTarget(), mindist + edge.getValue());
             }
         }

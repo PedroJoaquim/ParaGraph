@@ -1,28 +1,46 @@
 package pt.ist.rc.paragraph.computation;
 
-import pt.ist.rc.paragraph.model.Vertex;
-
-import java.util.List;
-
 /**
- * Created by Pedro Joaquim on 17-10-2016
+ * Worker thread that is assigned a given graph partition
  */
 public class ParaGraphWorker  {
 
+    /**
+     * Start partition vertex id
+     */
     private int from;
 
+    /**
+     * End partition vertex id (exclusive)
+     */
     private int to;
 
+    /**
+     * Vertex Centric Computation Object for computation
+     */
     private VertexCentricComputation vertexComputation;
 
+    /**
+     * Java thread being used for current superstep execution
+     */
     private Thread workerThread;
 
+    /**
+     * Constructor
+     *
+     * @param from Start partition vertex id
+     * @param to End partition vertex id (exclusive)
+     * @param vertexComputation Vertex Centric Computation Object for computation
+     */
     public ParaGraphWorker(int from, int to, VertexCentricComputation vertexComputation) {
         this.from = from;
         this.to = to;
         this.vertexComputation = vertexComputation;
     }
 
+    /**
+     * Run method executed by each worker in parallel that performs the computation
+     */
     public void run(){
 
         if(from != -1 && to != -1){
@@ -39,6 +57,11 @@ public class ParaGraphWorker  {
 
     }
 
+    /**
+     * Wait until the worker terminates current computation
+     *
+     * @throws InterruptedException
+     */
     public void await() throws InterruptedException {
         if(from != -1 && to != -1){ workerThread.join(); }
     }

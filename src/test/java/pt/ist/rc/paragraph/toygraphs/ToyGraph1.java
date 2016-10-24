@@ -4,6 +4,9 @@ import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.GraphData;
 import pt.ist.rc.paragraph.model.Vertex;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by Pedro Joaquim on 17-10-2016
  */
@@ -58,18 +61,15 @@ public class ToyGraph1 {
         Edge<Void>[] vertice8Edges = new Edge[1];
         vertice8Edges[0] = new Edge<>(7, null);
 
-
-
-        vertices[0] = new Vertex<>(null, vertice0Edges);
-        vertices[1] = new Vertex<>(null, vertice1Edges);
-        vertices[2] = new Vertex<>(null, vertice2Edges);
-        vertices[3] = new Vertex<>(null, vertice3Edges);
-        vertices[4] = new Vertex<>(null, vertice4Edges);
-        vertices[5] = new Vertex<>(null, vertice5Edges);
-        vertices[6] = new Vertex<>(null, vertice6Edges);
-        vertices[7] = new Vertex<>(null, vertice7Edges);
-        vertices[8] = new Vertex<>(null, vertice8Edges);
-
+        vertices[0] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice0Edges)));
+        vertices[1] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice1Edges)));
+        vertices[2] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice2Edges)));
+        vertices[3] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice3Edges)));
+        vertices[4] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice4Edges)));
+        vertices[5] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice5Edges)));
+        vertices[6] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice6Edges)));
+        vertices[7] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice7Edges)));
+        vertices[8] = new Vertex<>(null, new ArrayList<>(Arrays.asList(vertice8Edges)));
 
         return new GraphData<Void, Void>(vertices);
     }
