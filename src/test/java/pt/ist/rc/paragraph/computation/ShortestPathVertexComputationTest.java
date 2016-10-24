@@ -33,23 +33,15 @@ public class ShortestPathVertexComputationTest {
         spv.execute();
 
 
-        Map<Integer, Integer> distances = spv.getVertexComputationalValues();
-        Set<Integer> keys = distances.keySet();
+        Integer[] distances = spv.getVertexComputationalValues();
 
-        Assert.assertEquals(6, keys.size());
+        Assert.assertEquals(6, distances.length);
 
-        Assert.assertTrue(keys.contains(0));
-        Assert.assertTrue(keys.contains(1));
-        Assert.assertTrue(keys.contains(2));
-        Assert.assertTrue(keys.contains(3));
-        Assert.assertTrue(keys.contains(4));
-        Assert.assertTrue(keys.contains(5));
-
-        Assert.assertEquals(0, distances.get(0).intValue());
-        Assert.assertEquals(4, distances.get(1).intValue());
-        Assert.assertEquals(9, distances.get(2).intValue());
-        Assert.assertEquals(14, distances.get(3).intValue());
-        Assert.assertEquals(12, distances.get(4).intValue());
-        Assert.assertEquals(25, distances.get(5).intValue());
+        Assert.assertEquals(0, distances[0].intValue());
+        Assert.assertEquals(4, distances[1].intValue());
+        Assert.assertEquals(9, distances[2].intValue());
+        Assert.assertEquals(14, distances[3].intValue());
+        Assert.assertEquals(12, distances[4].intValue());
+        Assert.assertEquals(25, distances[5].intValue());
     }
 }

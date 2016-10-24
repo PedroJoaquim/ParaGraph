@@ -1,7 +1,9 @@
 package pt.ist.rc.paragraph.analytics;
 
 import pt.ist.rc.paragraph.computation.ComputationConfig;
+import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
+import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.GraphData;
 
 import java.util.List;
@@ -21,26 +23,29 @@ public class PageRankVertexComputation extends VertexCentricComputation<Void, Vo
     }
 
     @Override
-    public void compute(int vertexID, List<Double> messages) {
+    public void compute(ComputationalVertex<Void, Void, Double, Double> vertex) {
 
-        int numOutEdges = getOutEdges(vertexID).length;
+        int numOutEdges = vertex.getOutEdges().length;
 
         if(getSuperstep() > 0){
 
             double sum = 0;
 
-            for (Double msg : messages) {
+            for (Double msg : vertex.getMessages()) {
                 sum += msg;
             }
 
-            setValue(vertexID, (0.15 / getNumVertices()) + 0.85 * sum);
-
+            vertex.setComputationalValue((0.15 / getNumVertices()) + 0.85 * sum);
         }
 
         if(getSuperstep() < 30){
-            sendMessageToAllOutNeighbors(vertexID, getValue(vertexID) / numOutEdges);
+
+            for (Edge<Void> outEdge: vertex.getOutEdges()) {
+                sendMessageTo(outEdge.getTarget(), vertex.getComputationalValue() / numOutEdges);
+            }
         } else {
-            voteToHalt(vertexID);
+            
+           vertex.voteToHalt();
         }
     }
 }

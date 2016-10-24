@@ -1,6 +1,7 @@
 package pt.ist.rc.paragraph.analytics;
 
 import pt.ist.rc.paragraph.computation.ComputationConfig;
+import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.GraphData;
@@ -28,24 +29,24 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Void
     }
 
     @Override
-    public void compute(int vertexID, List<Integer> messages) {
+    public void compute(ComputationalVertex<Void, Integer, Integer, Integer> vertex) {
 
-        int mindist = vertexID == sourceVertexID ? 0 : INF;
+        int mindist = vertex.getId() == sourceVertexID ? 0 : INF;
 
-        for (Integer msg : messages) {
+        for (Integer msg : vertex.getMessages()) {
             mindist = shortestDistance(mindist, msg);
         }
 
-        if(isLesserThan(mindist, getValue(vertexID)) && mindist != INF){
+        if(isLesserThan(mindist, vertex.getComputationalValue()) && mindist != INF){
 
-            setValue(vertexID, mindist);
+            vertex.setComputationalValue(mindist);
 
-            for (Edge<Integer> edge: getOutEdges(vertexID)) {
+            for (Edge<Integer> edge: vertex.getOutEdges()) {
                 sendMessageTo(edge.getTarget(), mindist + edge.getValue());
             }
         }
 
-        voteToHalt(vertexID);
+        vertex.voteToHalt();
     }
 
     private int shortestDistance(int mindist, int msg) {

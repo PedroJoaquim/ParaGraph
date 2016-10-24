@@ -1,7 +1,9 @@
 package pt.ist.rc.paragraph.analytics;
 
 import pt.ist.rc.paragraph.computation.ComputationConfig;
+import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
+import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.GraphData;
 import pt.ist.rc.paragraph.model.Vertex;
 
@@ -25,28 +27,35 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Voi
     }
 
     @Override
-    public void compute(int vertexID, List<Integer> messages) {
+    public void compute(ComputationalVertex<Void, Void, Integer, Integer> vertex) {
 
         if(getSuperstep() == 0){
 
-            sendMessageToAllOutNeighbors(vertexID, vertexID);
+            for (Edge<Void> edge: vertex.getOutEdges()) {
+                sendMessageTo(edge.getTarget(), vertex.getId());
+            }
+
         } else {
 
-            int minValue = getValue(vertexID);
+            int minValue = vertex.getId();
 
-            for (Integer msg : messages) {
+            for (Integer msg : vertex.getMessages()) {
                 if (msg < minValue){
                     minValue = msg;
                 }
             }
 
-            if(minValue < getValue(vertexID)){
+            if(minValue < vertex.getComputationalValue()){
 
-                setValue(vertexID, minValue);
-                sendMessageToAllOutNeighbors(vertexID, minValue);
+                vertex.setComputationalValue(minValue);
+
+                for (Edge<Void> edge: vertex.getOutEdges()) {
+                    sendMessageTo(edge.getTarget(), vertex.getId());
+                }
+
             } else {
 
-                voteToHalt(vertexID);
+                vertex.voteToHalt();
             }
         }
     }
@@ -55,9 +64,12 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Voi
 
         Map<Integer, List<Integer>> result = new HashMap<>();
 
-        for (int i = 0; i < getNumVertices(); i++) {
+        Integer[] resultValues = getVertexComputationalValues();
 
-            Integer group = getValue(i);
+
+        for (int i = 0; i < resultValues.length; i++) {
+
+            Integer group = resultValues[i];
 
             if(!result.containsKey(group)){
                 result.put(group, new ArrayList<>());

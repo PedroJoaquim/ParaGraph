@@ -9,13 +9,9 @@ import java.util.*;
 /**
  * Created by Pedro Joaquim.
  */
-public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
+public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
 
-    private VCV[] vertexComputationalValue;
-
-    private InboxMessages<MV> inboxMessages;
-
-    private InboxMessages<MV> nextStepInboxMessages;
+    private List<ComputationalVertex<VV, EV, VCV, MV>> computationalVertices;
 
     private GraphData<VV, EV> graphData;
 
@@ -25,35 +21,27 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
 
     private int superstep;
 
-    private HashSet<Vertex<VV, EV>> activeVertices;
+    private HashSet<Integer> activeVertices;
 
     public VertexCentricComputation(final GraphData<VV, EV> graphData, ComputationConfig config) {
 
         this.graphData = graphData;
         this.config = config;
         this.numVertices = graphData.getVertices().length;
-        this.activeVertices = new HashSet<>(Arrays.asList(graphData.getVertices()));
+        this.activeVertices = new HashSet<>();
         this.superstep = 0;
-        this.inboxMessages = new InboxMessages<>();
-        this.nextStepInboxMessages = new InboxMessages<>();
 
-        vertexComputationalValue =  (VCV[]) new Object[numVertices]; //small hack
+        computationalVertices =  new ArrayList<>(this.numVertices);
 
         for (int i = 0; i < numVertices; i++) {
-            vertexComputationalValue[i] = initializeValue(i);
+            this.activeVertices.add(i);
+            this.computationalVertices.add(i, new ComputationalVertex<>(i, initializeValue(i), graphData.getVertex(i), activeVertices));
         }
     }
 
     public abstract VCV initializeValue(int vertexID);
 
-    public abstract void compute(int vertexID, List<MV> messages);
-
-    public void workerCompute(int vertexID){
-        if(activeVertices.contains(graphData.getVertex(vertexID))){
-            List<MV> messages = inboxMessages.getMessages(vertexID);
-            compute(vertexID, messages);
-        }
-    }
+    public abstract void compute(ComputationalVertex<VV, EV, VCV, MV> vertex);
 
     /*
      * Computation Available Functions
@@ -63,35 +51,8 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
         return this.numVertices;
     }
 
-
-    protected void voteToHalt(int vertexID){
-        this.activeVertices.remove(graphData.getVertex(vertexID));
-    }
-
-    protected Edge<EV>[] getOutEdges(int vertexID){
-        return graphData.getVertex(vertexID).getOutEdges();
-    }
-
-    protected void sendMessageToAllOutNeighbors(int vertexID, MV msg){
-        for (Edge<EV> e: graphData.getVertex(vertexID).getOutEdges()){
-            nextStepInboxMessages.addMessageTo(e.getTarget(), msg);
-        }
-    }
-
     protected void sendMessageTo(int targetID, MV msg){
-        nextStepInboxMessages.addMessageTo(targetID, msg);
-    }
-
-    protected void setValue(int vertexID, VCV value){
-       vertexComputationalValue[vertexID] = value;
-    }
-
-    protected VCV getValue(int vertexID){
-        return vertexComputationalValue[vertexID];
-    }
-
-    protected VV getVertexProperty(int vertexID){
-        return graphData.getVertex(vertexID).getValue();
+        this.computationalVertices.get(targetID).addNextStepMessage(msg);
     }
 
     protected int getSuperstep(){
@@ -120,13 +81,9 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
     }
 
     private void exchangeMessagesInboxes() {
-
-        this.inboxMessages.clearInbox();
-
-        InboxMessages<MV> tmp = this.inboxMessages;
-
-        this.inboxMessages = this.nextStepInboxMessages;
-        this.nextStepInboxMessages = tmp;
+        for (ComputationalVertex<VV, EV, VCV, MV> computationalVertex : computationalVertices) {
+            computationalVertex.swapInboxes();
+        }
     }
 
     private void initializeWorkers(ParaGraphWorker[] workers) {
@@ -171,21 +128,26 @@ public abstract class VertexCentricComputation<VV, EV, MV, VCV> {
 
     private void activateVerticesThatReceivedMessages(){
 
-        for (int i = 0; i < numVertices; i++) {
-            if(!nextStepInboxMessages.getMessages(i).isEmpty()){
-                this.activeVertices.add(graphData.getVertex(i));
+        for (ComputationalVertex<VV, EV, VCV, MV> computationalVertex : computationalVertices) {
+            if(computationalVertex.hasMessagesForNextStep()){
+                this.activeVertices.add(computationalVertex.getId());
             }
         }
     }
 
-    public Map<Integer, VCV> getVertexComputationalValues(){
+    public VCV[] getVertexComputationalValues(){
 
-        HashMap<Integer, VCV> result = new HashMap<>();
+        VCV[] result = (VCV[]) new Object[getNumVertices()];
 
-        for (int i = 0; i < getNumVertices(); i++) {
-            result.put(i, getValue(i));
+        for (int i = 0; i < result.length; i++) {
+            result[i] = computationalVertices.get(i).getComputationalValue();
         }
 
         return result;
+    }
+
+
+    public void workerCompute(int i) {
+        compute(computationalVertices.get(i));
     }
 }
