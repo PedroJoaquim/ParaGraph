@@ -31,7 +31,7 @@ public class ToyGraph1 {
 
         Edge<Void>[] vertice0Edges = new Edge[2];
         vertice0Edges[0] = new Edge<>(1, null);
-        vertice0Edges[1] = new Edge<>(2, null);
+        vertice0Edges[1] = new Edge<>(3, null);
 
         Edge<Void>[] vertice1Edges = new Edge[2];
         vertice1Edges[0] = new Edge<>(0, null);
