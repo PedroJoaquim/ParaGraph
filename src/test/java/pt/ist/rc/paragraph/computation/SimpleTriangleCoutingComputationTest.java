@@ -23,12 +23,13 @@ public class SimpleTriangleCoutingComputationTest {
 
     private static GraphData<Void, Void> graph3;
     private static GraphData<Void, Void> graph1;
-
+    private static GraphData<Void, Integer> graph2;
 
 
     @BeforeClass
     public static void oneTimeInit() {
         graph3 = ToyGraph3.loadGraph();
+        graph2 = ToyGraph2.loadGraph();
         graph1 = ToyGraph1.loadGraph();
     }
 
@@ -48,6 +49,16 @@ public class SimpleTriangleCoutingComputationTest {
         stc.execute();
 
         Assert.assertEquals(0, stc.getTriangleCount());
+    }
+
+    @Test
+    public void testSPV3() throws ParaGraphComputationException {
+
+        SimpleTriangleCountingAlgortihm stc = new SimpleTriangleCountingAlgortihm(graph2, new ComputationConfig().setNumWorkers(NUM_WORKERS));
+        stc.execute();
+
+        Assert.assertEquals(0, stc.getTriangleCount());
+
     }
 
 }

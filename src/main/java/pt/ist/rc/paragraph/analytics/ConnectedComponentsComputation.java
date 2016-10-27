@@ -14,9 +14,9 @@ import java.util.Map;
 /**
  * Created by Pedro Joaquim on 17-10-2016
  */
-public class ConnectedComponentsComputation extends VertexCentricComputation<Void, Void, Integer, Integer> {
+public class ConnectedComponentsComputation extends VertexCentricComputation<Object, Object, Integer, Integer> {
 
-    public ConnectedComponentsComputation(GraphData<Void, Void> graphData, ComputationConfig config) {
+    public ConnectedComponentsComputation(GraphData<?, ?> graphData, ComputationConfig config) {
         super(graphData, config);
     }
 
@@ -26,7 +26,7 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Voi
     }
 
     @Override
-    public void compute(ComputationalVertex<Void, Void, Integer, Integer> vertex) {
+    public void compute(ComputationalVertex<?, ?, Integer, Integer> vertex) {
 
         if(getSuperStep() == 0){
 

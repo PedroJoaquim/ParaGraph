@@ -11,12 +11,12 @@ import java.util.Iterator;
 /**
  * Created by Pedro Joaquim on 17-10-2016
  */
-public class ShortestPathVertexComputation extends VertexCentricComputation<Void, Integer, Integer, Integer> {
+public class ShortestPathVertexComputation extends VertexCentricComputation<Object, Integer, Integer, Integer> {
 
     private int sourceVertexID;
     public static final int INF = -1;
 
-    public ShortestPathVertexComputation(GraphData<Void, Integer> graphData, ComputationConfig config, int sourceVertexID) {
+    public ShortestPathVertexComputation(GraphData<?, Integer> graphData, ComputationConfig config, int sourceVertexID) {
         super(graphData, config);
         this.sourceVertexID = sourceVertexID;
     }
@@ -27,7 +27,7 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Void
     }
 
     @Override
-    public void compute(ComputationalVertex<Void, Integer, Integer, Integer> vertex) {
+    public void compute(ComputationalVertex<?, ? extends Integer, Integer, Integer> vertex) {
 
         int mindist = vertex.getId() == sourceVertexID ? 0 : INF;
 
@@ -39,10 +39,10 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Void
 
             vertex.setComputationalValue(mindist);
 
-            Iterator<Edge<Integer>> iterator = vertex.getOutEdgesIterator();
+            Iterator<? extends Edge<? extends Integer>> iterator = vertex.getOutEdgesIterator();
 
             while (iterator.hasNext()){
-                Edge<Integer> edge = iterator.next();
+                Edge<? extends Integer> edge = iterator.next();
                 sendMessageTo(edge.getTarget(), mindist + edge.getValue());
             }
         }

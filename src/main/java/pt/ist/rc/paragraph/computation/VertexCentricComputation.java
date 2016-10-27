@@ -14,7 +14,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
     /**
      * List of computational vertex representing the graph core vertices
      */
-    private List<ComputationalVertex<VV, EV, VCV, MV>> computationalVertices;
+    private List<ComputationalVertex<? extends VV,? extends EV, VCV, MV>> computationalVertices;
 
     /**
      * Current computation configuration
@@ -39,10 +39,18 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
     /**
      * Constructor
      *
+     *  ? extends VV and ? extends EV are used in order to allow some algorithms that dont want a specific VV and EV value
+     *  to extend VertexCentricComputation<Object, Object, <class for VCV>, <class for MV>> and thid way you can pass any arbitrary
+     *  graph data object
+     *
+     *  for instance you have a graph data object of type GraphData<Integer, Double>
+     *
+     *      this way you can pass it to a algorithm that extends VertexCentricComputation<Object, Object, Integer, Integer>
+     *
      * @param graphData Core graph data
      * @param config Computation configuration
      */
-    public VertexCentricComputation(final GraphData<VV, EV> graphData, ComputationConfig config) {
+    public VertexCentricComputation(final GraphData<? extends VV, ? extends EV> graphData, ComputationConfig config) {
 
         this.config = config;
         this.numVertices = graphData.getVertices().length;
@@ -67,7 +75,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      *
      * @param vertex that will execute the compute method
      */
-    public abstract void compute(ComputationalVertex<VV, EV, VCV, MV> vertex);
+    public abstract void compute(ComputationalVertex<? extends VV, ? extends EV, VCV, MV> vertex);
 
 
     /**
@@ -90,12 +98,12 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
     /**
      * util function to send message to all vertex out neighbors
      */
-    protected void sendMessageToAllOutNeighbors(ComputationalVertex<VV, EV, VCV, MV> vertex, MV msg){
+    protected void sendMessageToAllOutNeighbors(ComputationalVertex<? extends VV, ? extends EV, VCV, MV> vertex, MV msg){
 
-        Iterator<Edge<EV>> iterator = vertex.getOutEdgesIterator();
+        Iterator<? extends Edge<? extends EV>> iterator = vertex.getOutEdgesIterator();
 
         while (iterator.hasNext()){
-            Edge<EV> edge = iterator.next();
+            Edge<? extends EV> edge = iterator.next();
             sendMessageTo(edge.getTarget(), msg);
         }
     }
@@ -144,7 +152,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      * Prepare vertices inbox messages for next super step
      */
     private void exchangeMessagesInboxes() {
-        for (ComputationalVertex<VV, EV, VCV, MV> computationalVertex : computationalVertices) {
+        for (ComputationalVertex<? extends VV, ? extends EV, VCV, MV> computationalVertex : computationalVertices) {
             computationalVertex.swapInboxes();
         }
     }
@@ -204,7 +212,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      */
     private void activateVerticesThatReceivedMessages(){
 
-        for (ComputationalVertex<VV, EV, VCV, MV> computationalVertex : computationalVertices) {
+        for (ComputationalVertex<? extends VV, ? extends EV, VCV, MV> computationalVertex : computationalVertices) {
             if(computationalVertex.hasMessagesForNextStep()){
                 this.activeVertices.add(computationalVertex.getId());
             }
