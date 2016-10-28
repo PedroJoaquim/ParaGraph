@@ -7,7 +7,7 @@ ParaGraph - Parallel Graph Processing Framework
 
 This systems aims at helping developers creating easy to use and parallelize graph algorithms that can run over a huge graph. The developed algorithms are based on the Google's Pregel "Think Like a Vertex" programming model and are execute under the Bulk Synchronous Parallel computational model.
 
-The computation runs by supersteps, every superstep a `compute()` function is executed in parallel at each vertex. Every vertex is able to update its value and send messages to its outgoing neighbors. Messages sent during superstep N will be available in superstep N+1. The computation finished when all vertices have called the `voteToHalt()` function.
+The computation runs by supersteps, every superstep a `compute()` function is executed in parallel at each vertex. Every vertex is able to update its value and send messages to its outgoing neighbors. Messages sent during superstep N will be available in superstep N+1. The computation ends when all vertices have called the `voteToHalt()` function. Vertices that vote to halt in one superstep  but receive messages in later supersteps are reactivated
 
 ## How to Use
 
@@ -95,7 +95,8 @@ The `initialize(int vertexID)` function defines a initial value to the vertices 
 
 #### Putting it all together
 
-here we give a concrete example of an algorithm representing our implementation of the pagerank algorithm:
+here we give concrete examples of algorithms representing our implementation of the pagerank and triangle couting algorithms.
+More algorithms can be found at the _analytics_ package
 
 ```java
 public class PageRankVertexComputation extends VertexCentricComputation<Object, Object, Double, Double> {
@@ -137,6 +138,82 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
             
            vertex.voteToHalt();
         }
+    }
+}
+```
+
+```java
+
+public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Object, Object, Integer, String> {
+
+    public SimpleTriangleCountingAlgortihm(GraphData<?, ?> graphData, ComputationConfig config) {
+        super(graphData, config);
+    }
+
+    @Override
+    protected Integer initializeValue(int vertexID) {
+        return 0;
+    }
+
+    @Override
+    protected void compute(ComputationalVertex<?, ?, Integer, String> vertex) {
+
+
+        if (getSuperStep() == 0) {
+
+            Iterator<? extends Edge<?>> iterator = vertex.getOutEdgesIterator();
+
+            while (iterator.hasNext()) {
+                Edge<?> edge = iterator.next();
+
+                if (edge.getTarget() > vertex.getId()) {
+                    sendMessageTo(edge.getTarget(), String.valueOf(vertex.getId()));
+                }
+            }
+
+        } else if (getSuperStep() == 1) {
+
+            Iterator<? extends Edge<?>> iterator = vertex.getOutEdgesIterator();
+
+            List<String> messages = vertex.getMessages();
+
+            while (iterator.hasNext()) {
+                Edge<?> edge = iterator.next();
+
+                if (edge.getTarget() > vertex.getId()) {
+
+                    for (String msg : messages) {
+                        sendMessageTo(edge.getTarget(), msg + "#" + String.valueOf(vertex.getId()));
+                    }
+                }
+            }
+
+
+        } else {
+
+            for (String msg : vertex.getMessages()) {
+
+                String[] verticesID = msg.split("#");
+
+                Iterator<? extends Edge<?>> iterator = vertex.getOutEdgesIterator();
+
+                while (iterator.hasNext()) {
+                    Edge<?> edge = iterator.next();
+
+                    if (Integer.valueOf(verticesID[0]) == edge.getTarget()) {
+                        vertex.setComputationalValue(vertex.getComputationalValue() + 1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        vertex.voteToHalt();
+    }
+
+
+    public int getTriangleCount(){
+        return getVertexComputationalValues().stream().mapToInt(Integer::intValue).sum();
     }
 }
 ```
