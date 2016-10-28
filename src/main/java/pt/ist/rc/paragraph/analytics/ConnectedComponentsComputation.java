@@ -21,12 +21,12 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Obj
     }
 
     @Override
-    public Integer initializeValue(int vertexID) {
+    protected Integer initializeValue(int vertexID) {
         return vertexID;
     }
 
     @Override
-    public void compute(ComputationalVertex<?, ?, Integer, Integer> vertex) {
+    protected void compute(ComputationalVertex<?, ?, Integer, Integer> vertex) {
 
         if(getSuperStep() == 0){
 

@@ -27,12 +27,12 @@ public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Ob
 
 
     @Override
-    public Integer initializeValue(int vertexID) {
+    protected Integer initializeValue(int vertexID) {
         return 0;
     }
 
     @Override
-    public void compute(ComputationalVertex<?, ?, Integer, String> vertex) {
+    protected void compute(ComputationalVertex<?, ?, Integer, String> vertex) {
 
 
         if (getSuperStep() == 0) {

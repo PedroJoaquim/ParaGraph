@@ -69,13 +69,13 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      * @param vertexID id of the vertex that will receive the initialization value
      * @return initialization value
      */
-    public abstract VCV initializeValue(int vertexID);
+    protected abstract VCV initializeValue(int vertexID);
 
     /**
      *
      * @param vertex that will execute the compute method
      */
-    public abstract void compute(ComputationalVertex<? extends VV, ? extends EV, VCV, MV> vertex);
+    protected abstract void compute(ComputationalVertex<? extends VV, ? extends EV, VCV, MV> vertex);
 
 
     /**
@@ -238,7 +238,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      *
      * @param i vertex id that should be executed
      */
-    public void workerCompute(int i) {
+    protected void workerCompute(int i) {
         compute(computationalVertices.get(i));
     }
 

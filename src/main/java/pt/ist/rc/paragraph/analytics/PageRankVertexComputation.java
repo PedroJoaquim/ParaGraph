@@ -20,12 +20,12 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
     }
 
     @Override
-    public Double initializeValue(int vertexID) {
+    protected Double initializeValue(int vertexID) {
         return 1.0 / getNumVertices();
     }
 
     @Override
-    public void compute(ComputationalVertex<?, ?, Double, Double> vertex) {
+    protected void compute(ComputationalVertex<?, ?, Double, Double> vertex) {
 
         int numOutEdges = vertex.getNumberOutEdges();
 

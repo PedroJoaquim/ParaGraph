@@ -22,12 +22,12 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Obje
     }
 
     @Override
-    public Integer initializeValue(int vertexID) {
+    protected Integer initializeValue(int vertexID) {
         return -1;
     }
 
     @Override
-    public void compute(ComputationalVertex<?, ? extends Integer, Integer, Integer> vertex) {
+    protected void compute(ComputationalVertex<?, ? extends Integer, Integer, Integer> vertex) {
 
         int mindist = vertex.getId() == sourceVertexID ? 0 : INF;
 
