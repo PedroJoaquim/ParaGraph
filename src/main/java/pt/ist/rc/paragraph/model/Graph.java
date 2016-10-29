@@ -1,5 +1,7 @@
 package pt.ist.rc.paragraph.model;
 
+import pt.ist.rc.paragraph.exceptions.DuplicateVertexIdException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 

@@ -1,6 +1,6 @@
 package pt.ist.rc.paragraph.parser.gml;
 
-import pt.ist.rc.paragraph.model.DuplicateVertexIdException;
+import pt.ist.rc.paragraph.exceptions.DuplicateVertexIdException;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.Graph;
 import pt.ist.rc.paragraph.model.Vertex;
