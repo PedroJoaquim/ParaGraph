@@ -4,7 +4,7 @@ import pt.ist.rc.paragraph.computation.ComputationConfig;
 import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Edge;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 
 import java.util.Iterator;
 
@@ -16,8 +16,8 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Obje
     private int sourceVertexID;
     public static final int INF = -1;
 
-    public ShortestPathVertexComputation(GraphData<?, Integer> graphData, ComputationConfig config, int sourceVertexID) {
-        super(graphData, config);
+    public ShortestPathVertexComputation(Graph<?, Integer> graph, ComputationConfig config, int sourceVertexID) {
+        super(graph, config);
         this.sourceVertexID = sourceVertexID;
     }
 
@@ -43,7 +43,7 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Obje
 
             while (iterator.hasNext()){
                 Edge<? extends Integer> edge = iterator.next();
-                sendMessageTo(edge.getTarget(), mindist + edge.getValue());
+                sendMessageTo(edge.getTargetIdx(), mindist + edge.getValue());
             }
         }
 

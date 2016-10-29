@@ -3,8 +3,7 @@ package pt.ist.rc.paragraph.analytics;
 import pt.ist.rc.paragraph.computation.ComputationConfig;
 import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
-import pt.ist.rc.paragraph.model.Edge;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 
 /**
  * Created by Pedro Joaquim on 17-10-2016
@@ -13,8 +12,8 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
 
     private int superstepNumber;
 
-    public PageRankVertexComputation(GraphData<?, ?> graphData, ComputationConfig config, int supserstepNumber) {
-        super(graphData, config);
+    public PageRankVertexComputation(Graph<?, ?> graph, ComputationConfig config, int supserstepNumber) {
+        super(graph, config);
 
         this.superstepNumber = supserstepNumber;
     }

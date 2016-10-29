@@ -5,12 +5,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import pt.ist.rc.paragraph.analytics.ShortestPathVertexComputation;
 import pt.ist.rc.paragraph.exceptions.ParaGraphComputationException;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph2;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Pedro Joaquim.
@@ -19,7 +17,7 @@ public class ShortestPathVertexComputationTest {
 
     private static final int NUM_WORKERS = 4;
 
-    private static GraphData<Void, Integer> graph1;
+    private static Graph<Void, Integer> graph1;
 
 
     @BeforeClass

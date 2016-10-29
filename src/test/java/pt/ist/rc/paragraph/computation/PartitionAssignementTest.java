@@ -1,24 +1,21 @@
 package pt.ist.rc.paragraph.computation;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import pt.ist.rc.paragraph.analytics.ConnectedComponentsComputation;
 import pt.ist.rc.paragraph.analytics.ShortestPathVertexComputation;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph1;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph2;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Pedro Joaquim.
  */
 public class PartitionAssignementTest {
 
-    private static GraphData<Void, Void> graph1;
-    private static GraphData<Void, Integer> graph2;
+    private static Graph<Void, Void> graph1;
+    private static Graph<Void, Integer> graph2;
 
     @BeforeClass
     public static void oneTimeInit() {

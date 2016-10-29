@@ -2,7 +2,7 @@ package pt.ist.rc.paragraph.computation;
 
 import pt.ist.rc.paragraph.exceptions.ParaGraphComputationException;
 import pt.ist.rc.paragraph.model.Edge;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 
 import java.util.*;
 
@@ -47,13 +47,13 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      *
      *      this way you can pass it to a algorithm that extends VertexCentricComputation<Object, Object, Integer, Integer>
      *
-     * @param graphData Core graph data
+     * @param graph  Core graph data
      * @param config Computation configuration
      */
-    public VertexCentricComputation(final GraphData<? extends VV, ? extends EV> graphData, ComputationConfig config) {
+    public VertexCentricComputation(final Graph<? extends VV, ? extends EV> graph, ComputationConfig config) {
 
         this.config = config;
-        this.numVertices = graphData.getVertices().length;
+        this.numVertices = graph.getVertices().size();
         this.activeVertices = new HashSet<>();
         this.superStep = 0;
 
@@ -61,7 +61,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
 
         for (int i = 0; i < numVertices; i++) {
             this.activeVertices.add(i);
-            this.computationalVertices.add(i, new ComputationalVertex<>(i, initializeValue(i), graphData.getVertex(i), activeVertices));
+            this.computationalVertices.add(i, new ComputationalVertex<>(i, initializeValue(i), graph.getVertex(i), activeVertices));
         }
     }
 
@@ -104,7 +104,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
 
         while (iterator.hasNext()){
             Edge<? extends EV> edge = iterator.next();
-            sendMessageTo(edge.getTarget(), msg);
+            sendMessageTo(edge.getTargetIdx(), msg);
         }
     }
 

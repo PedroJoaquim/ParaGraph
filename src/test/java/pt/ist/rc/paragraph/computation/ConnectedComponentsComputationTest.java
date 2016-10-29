@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import pt.ist.rc.paragraph.analytics.ConnectedComponentsComputation;
 import pt.ist.rc.paragraph.exceptions.ParaGraphComputationException;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph1;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class ConnectedComponentsComputationTest {
 
     private static final int NUM_WORKERS = 4;
 
-    private static GraphData<Void, Void> graph1;
+    private static Graph<Void, Void> graph1;
 
     @BeforeClass
     public static void oneTimeInit() {

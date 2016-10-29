@@ -6,7 +6,7 @@ import org.junit.Test;
 import pt.ist.rc.paragraph.analytics.ShortestPathVertexComputation;
 import pt.ist.rc.paragraph.analytics.SimpleTriangleCountingAlgortihm;
 import pt.ist.rc.paragraph.exceptions.ParaGraphComputationException;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph1;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph2;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph3;
@@ -21,9 +21,9 @@ public class SimpleTriangleCoutingComputationTest {
 
     private static final int NUM_WORKERS = 1;
 
-    private static GraphData<Void, Void> graph3;
-    private static GraphData<Void, Void> graph1;
-    private static GraphData<Void, Integer> graph2;
+    private static Graph<Void, Void> graph3;
+    private static Graph<Void, Void> graph1;
+    private static Graph<Void, Integer> graph2;
 
 
     @BeforeClass

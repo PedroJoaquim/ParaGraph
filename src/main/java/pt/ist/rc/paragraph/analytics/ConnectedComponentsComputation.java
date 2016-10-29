@@ -3,8 +3,7 @@ package pt.ist.rc.paragraph.analytics;
 import pt.ist.rc.paragraph.computation.ComputationConfig;
 import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
-import pt.ist.rc.paragraph.model.Edge;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +15,8 @@ import java.util.Map;
  */
 public class ConnectedComponentsComputation extends VertexCentricComputation<Object, Object, Integer, Integer> {
 
-    public ConnectedComponentsComputation(GraphData<?, ?> graphData, ComputationConfig config) {
-        super(graphData, config);
+    public ConnectedComponentsComputation(Graph<?, ?> graph, ComputationConfig config) {
+        super(graph, config);
     }
 
     @Override

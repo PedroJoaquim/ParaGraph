@@ -4,7 +4,7 @@ import pt.ist.rc.paragraph.computation.ComputationConfig;
 import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Edge;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 
 import java.util.Iterator;
 import java.util.List;
@@ -18,11 +18,11 @@ public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Ob
     /**
      * Constructor
      *
-     * @param graphData Core graph data
-     * @param config    Computation configuration
+     * @param graph  Core graph data
+     * @param config Computation configuration
      */
-    public SimpleTriangleCountingAlgortihm(GraphData<?, ?> graphData, ComputationConfig config) {
-        super(graphData, config);
+    public SimpleTriangleCountingAlgortihm(Graph<?, ?> graph, ComputationConfig config) {
+        super(graph, config);
     }
 
 
@@ -42,8 +42,8 @@ public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Ob
             while (iterator.hasNext()) {
                 Edge<?> edge = iterator.next();
 
-                if (edge.getTarget() > vertex.getId()) {
-                    sendMessageTo(edge.getTarget(), String.valueOf(vertex.getId()));
+                if (edge.getTargetIdx() > vertex.getId()) {
+                    sendMessageTo(edge.getTargetIdx(), String.valueOf(vertex.getId()));
                 }
             }
 
@@ -56,10 +56,10 @@ public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Ob
             while (iterator.hasNext()) {
                 Edge<?> edge = iterator.next();
 
-                if (edge.getTarget() > vertex.getId()) {
+                if (edge.getTargetIdx() > vertex.getId()) {
 
                     for (String msg : messages) {
-                        sendMessageTo(edge.getTarget(), msg + "#" + String.valueOf(vertex.getId()));
+                        sendMessageTo(edge.getTargetIdx(), msg + "#" + String.valueOf(vertex.getId()));
                     }
                 }
             }
@@ -76,7 +76,7 @@ public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Ob
                 while (iterator.hasNext()) {
                     Edge<?> edge = iterator.next();
 
-                    if (Integer.valueOf(verticesID[0]) == edge.getTarget()) {
+                    if (Integer.valueOf(verticesID[0]) == edge.getTargetIdx()) {
                         vertex.setComputationalValue(vertex.getComputationalValue() + 1);
                         break;
                     }

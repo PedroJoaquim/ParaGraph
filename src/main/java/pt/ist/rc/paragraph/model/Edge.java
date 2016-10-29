@@ -1,36 +1,82 @@
 package pt.ist.rc.paragraph.model;
 
-public class Edge<EV> {
-
-    /*
-     * Edge target vertex
-     * (source vertex implicit by edge position on the edges array)
-     */
-    private int target;
-
+public final class Edge<EV> {
+    private final int targetIdx;
+    private final String source;
+    private final String target;
+    private final String label;
     /*
      * Edge property
      */
-    private EV value;
+    private final EV value;
 
-    public Edge(int target, EV value) {
-        this.target = target;
-        this.value = value;
+    private Edge(Builder<EV> builder) {
+        this.targetIdx = builder.targetIdx;
+        this.value = builder.value;
+
+        this.source = builder.source;
+        this.target = builder.target;
+        this.label = builder.label;
     }
 
-    public int getTarget() {
-        return target;
-    }
-
-    public void setTarget(int target) {
-        this.target = target;
+    public int getTargetIdx() {
+        return this.targetIdx;
     }
 
     public EV getValue() {
-        return value;
+        return this.value;
     }
 
-    public void setValue(EV value) {
-        this.value = value;
+    public String getSource() {
+        return this.source;
+    }
+
+    public static class Builder<EV> {
+        private int targetIdx = -1;
+        private EV value;
+        private String source;
+        private String target;
+        private String label;
+
+        public Builder<EV> value(EV value) {
+            this.value = value;
+            return this;
+        }
+
+        public Builder<EV> source(String source) {
+            this.source = source;
+            return this;
+        }
+
+        public Builder<EV> target(String target) {
+            this.target = target;
+            return this;
+        }
+
+        public Builder<EV> label(String label) {
+            this.label = label;
+            return this;
+        }
+
+        public Builder<EV> targetIdx(int targetIdx) {
+            this.targetIdx = targetIdx;
+            return this;
+        }
+
+        public String getSource() {
+            return this.source;
+        }
+
+        public String getTarget() {
+            return this.target;
+        }
+
+        public int getTargetIdx() { return this.targetIdx; }
+
+        public boolean hasTargetIdx() { return this.targetIdx != -1; }
+
+        public Edge<EV> build() {
+            return new Edge<>(this);
+        }
     }
 }
