@@ -22,7 +22,7 @@ This can be achieved by running your project with the following command:
 
 Before starting executing algorithms on your graph data you need to be able to load it. To do so, you need to have a `Graph<VV, EV>` instance.
 
-This class will represent your graph data and can be used to execute multiple algorithms. This graph data is immutable so you are not able to change it, you can multiple instances of it though.
+This class will represent your graph data and can be used to execute multiple algorithms. This graph data is immutable so you are not able to change it, you can hava multiple instances of `Graph` though.
 
 
 The Graph class is a generic type, parameterized by the `VV` and `EV` value types.
