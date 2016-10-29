@@ -1,4 +1,4 @@
-ParaGraph - Parallel Graph Processing Library
+ParaGraph - Parallel Graph Processing Library [![Build Status](https://travis-ci.org/PedroJoaquim/ParaGraph.svg?branch=master)](https://travis-ci.org/PedroJoaquim/ParaGraph)
 ================================
 
 ## Introduction
