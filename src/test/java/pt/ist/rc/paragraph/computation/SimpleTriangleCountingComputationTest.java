@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Pedro Joaquim on 27-10-2016
  */
-public class SimpleTriangleCoutingComputationTest {
+public class SimpleTriangleCountingComputationTest {
 
 
     private static final int NUM_WORKERS = 1;

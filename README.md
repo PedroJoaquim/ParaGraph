@@ -95,7 +95,7 @@ The `initialize(int vertexID)` function defines a initial value to the vertices 
 
 #### Putting it all together
 
-here we give concrete examples of algorithms representing our implementation of the pagerank and triangle couting algorithms.
+here we give concrete examples of algorithms representing our implementation of the pagerank and triangle counting algorithms.
 More algorithms can be found at the _analytics_ package
 
 ```java
