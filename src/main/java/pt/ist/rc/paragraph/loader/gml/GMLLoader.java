@@ -1,9 +1,10 @@
-package pt.ist.rc.paragraph.parser.gml;
+package pt.ist.rc.paragraph.loader.gml;
 
 import pt.ist.rc.paragraph.exceptions.DuplicateVertexIdException;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.Graph;
 import pt.ist.rc.paragraph.model.Vertex;
+import pt.ist.rc.paragraph.parser.gml.GMLParser;
 
 import java.io.IOException;
 import java.io.Reader;

@@ -2,6 +2,7 @@ package pt.ist.rc.paragraph.parser.gml;
 
 import org.junit.Assert;
 import org.junit.Test;
+import pt.ist.rc.paragraph.loader.gml.GMLLoader;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.Graph;
 import pt.ist.rc.paragraph.model.Vertex;
