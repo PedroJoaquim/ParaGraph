@@ -1,9 +1,9 @@
-ParaGraph - Parallel Graph Processing Framework
+ParaGraph - Parallel Graph Processing Library
 ================================
 
 ## Introduction
 
-**ParaGraph** is a simple, single machine, graph processing framework. 
+**ParaGraph** is a simple, single machine, graph processing library.
 
 This systems aims at helping developers creating easy to use and parallelize graph algorithms that can run over a huge graph. The developed algorithms are based on the Google's Pregel "Think Like a Vertex" programming model and are execute under the Bulk Synchronous Parallel computational model.
 
