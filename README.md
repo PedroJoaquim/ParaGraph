@@ -20,12 +20,12 @@ This can be achieved by running your project with the following command:
 
 ### Loading Graph Data
 
-Before starting executing algorithms on your graph data you need to be able to load it. To do so, you need to create a `GraphData<VV, EV>` instance. 
+Before starting executing algorithms on your graph data you need to be able to load it. To do so, you need to have a `GraphData<VV, EV>` instance.
 
-This class will represent your graph data and can be used to execute multiple algorithms. This graph data is immutable so you are not able to change it, unless you load it again from storage.
+This class will represent your graph data and can be used to execute multiple algorithms. This graph data is immutable so you are not able to change it, you can multiple instances of it though.
 
 
-The GraphData class it's a generic type in java parameterized by the `VV` and `EV` value types. 
+The GraphData class is a generic type, parameterized by the `VV` and `EV` value types.
 
 The parameters refer to graph vertex's properties (VV) and edge's properties (EV). For instance a directed graph from persons, with names and phone numbers, to other persons linked by an edge with a given weight could be loaded by a `GraphData<Person, Integer>` instance. This data will then be available to you during algorithm execution.
 
