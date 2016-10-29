@@ -14,22 +14,22 @@ The computation runs by supersteps, every superstep a `compute()` function is ex
 ### Add Project to CLASSPATH
 
 The first step is to add our _ParaGraph*.jar_ file to you project _CLASSPATH_.
-This can be achieved by running your project with the following command: 
+This can be achieved by running your project with the following command:
 
 `java -cp "/path/to/jar/Paragraph*.jar" your.project.MainClass`
 
-### Loading Graph Data
+### Loading the Graph
 
-Before starting executing algorithms on your graph data you need to be able to load it. To do so, you need to have a `GraphData<VV, EV>` instance.
+Before starting executing algorithms on your graph data you need to be able to load it. To do so, you need to have a `Graph<VV, EV>` instance.
 
 This class will represent your graph data and can be used to execute multiple algorithms. This graph data is immutable so you are not able to change it, you can multiple instances of it though.
 
 
-The GraphData class is a generic type, parameterized by the `VV` and `EV` value types.
+The Graph class is a generic type, parameterized by the `VV` and `EV` value types.
 
-The parameters refer to graph vertex's properties (VV) and edge's properties (EV). For instance a directed graph from persons, with names and phone numbers, to other persons linked by an edge with a given weight could be loaded by a `GraphData<Person, Integer>` instance. This data will then be available to you during algorithm execution.
+The parameters refer to graph vertex's properties (VV) and edge's properties (EV). For instance a directed graph from persons, with names and phone numbers, to other persons linked by an edge with a given weight could be loaded by a `Graph<Person, Integer>` instance. This data will then be available to you during algorithm execution.
 
-In order to create a `GraphData` instance you will have to provide to the constructor 3 parameters.
+In order to create a `Graph` instance you will have to provide to the constructor 3 parameters.
 
 The first parameter it's a `File` object referring to the file in your system storage holding the graph information
 
@@ -49,15 +49,15 @@ An example usage could be:
            return new Person(splited[0], splited[1]); //name and phone number
        }
    };
-   
+
    Function<String, Integer> fInteger = new Function<String, Integer>() {
        @Override
        public Integer apply(String s) {
            return Integer.valueOf(s); //edge weight
        }
    };
-  
-  GraphData<Person, Integer> graph = new GraphData<>(fData, fPerson, fInteger);
+
+  Graph<Person, Integer> graph = new Graph<>(fData, fPerson, fInteger);
   ...
 ```
 
@@ -74,11 +74,11 @@ In order to develop your own algorithms you have to create your own class and ex
 
 This class is also a generic type parameterized by the values `VV`, `EV`, `VCV` and `MV` that you need to define when you extend this class.
 
-As in `GraphData`, `VV` and `EV` represent the core graph data vertex's values and edges's values. 
+As in `Graph`, `VV` and `EV` represent the core graph data vertex's values and edges's values.
 
-Lets imagine that your algorithm is designed to process graphs that have vertex properties with `Person` and `Integer` as edges properties, then you should extend the `VertexCentricComputation<Person, Integer, ..., ...>`. But if your algorithm does not need to know the vertex properties nor edge properties you can extend the `VertexCentricComputation<Object, Object, ..., ...>`, this way you are able to receive any kind of `GraphData` instance.
+Lets imagine that your algorithm is designed to process graphs that have vertex properties with `Person` and `Integer` as edges properties, then you should extend the `VertexCentricComputation<Person, Integer, ..., ...>`. But if your algorithm does not need to know the vertex properties nor edge properties you can extend the `VertexCentricComputation<Object, Object, ..., ...>`, this way you are able to receive any kind of `Graph` instance.
 
-The `MV` and `VCV` are values specific to the algorithm being created only. 
+The `MV` and `VCV` are values specific to the algorithm being created only.
 
 `MV` represents the message values that your algorithm will exchange between vertices. For instance, in our single source shortest paths algorithm we exchange distances in messages, so our MV values is defined as `Integer`.
 
@@ -103,7 +103,7 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
 
     private int superstepNumber;
 
-    public PageRankVertexComputation(GraphData<?, ?> graphData, ComputationConfig config, int supserstepNumber) {
+    public PageRankVertexComputation(Graph<?, ?> graphData, ComputationConfig config, int supserstepNumber) {
         super(graphData, config);
 
         this.superstepNumber = supserstepNumber;
@@ -135,7 +135,7 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
             sendMessageToAllOutNeighbors(vertex, vertex.getComputationalValue() / numOutEdges);
 
         } else {
-            
+
            vertex.voteToHalt();
         }
     }
@@ -146,7 +146,7 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
 
 public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Object, Object, Integer, String> {
 
-    public SimpleTriangleCountingAlgorithm(GraphData<?, ?> graphData, ComputationConfig config) {
+    public SimpleTriangleCountingAlgorithm(Graph<?, ?> graphData, ComputationConfig config) {
         super(graphData, config);
     }
 
@@ -229,7 +229,7 @@ Here we leave an example app illustrating  all the described functionalities:
 
 import pt.ist.rc.paragraph.analytics.SimpleTriangleCountingAlgorithm;
 import pt.ist.rc.paragraph.computation.ComputationConfig;
-import pt.ist.rc.paragraph.model.GraphData;
+import pt.ist.rc.paragraph.model.Graph;
 
 import java.io.File;
 import java.util.function.Function;
@@ -251,19 +251,16 @@ public class TestGraph {
 
         ComputationConfig conf = new ComputationConfig().setNumWorkers(5);
 
-        GraphData<Void, Void> graph = new GraphData<>(fData, f, f);
+        Graph<Void, Void> graph = new Graph<>(fData, f, f);
 
 
         SimpleTriangleCountingAlgorithm stc = new SimpleTriangleCountingAlgorithm(graph, conf);
         stc.execute();
-        
+
         System.out.println(stc.getTriangleCount());
     }
-    
+
 }
 
 
 ```
-
-
-
