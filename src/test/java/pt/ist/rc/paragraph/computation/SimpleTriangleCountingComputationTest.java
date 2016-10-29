@@ -3,15 +3,12 @@ package pt.ist.rc.paragraph.computation;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import pt.ist.rc.paragraph.analytics.ShortestPathVertexComputation;
-import pt.ist.rc.paragraph.analytics.SimpleTriangleCountingAlgortihm;
+import pt.ist.rc.paragraph.analytics.SimpleTriangleCountingAlgorithm;
 import pt.ist.rc.paragraph.exceptions.ParaGraphComputationException;
 import pt.ist.rc.paragraph.model.Graph;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph1;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph2;
 import pt.ist.rc.paragraph.toygraphs.ToyGraph3;
-
-import java.util.List;
 
 /**
  * Created by Pedro Joaquim on 27-10-2016
@@ -36,7 +33,7 @@ public class SimpleTriangleCountingComputationTest {
     @Test
     public void testSPV() throws ParaGraphComputationException {
 
-        SimpleTriangleCountingAlgortihm stc = new SimpleTriangleCountingAlgortihm(graph3, new ComputationConfig().setNumWorkers(NUM_WORKERS));
+        SimpleTriangleCountingAlgorithm stc = new SimpleTriangleCountingAlgorithm(graph3, new ComputationConfig().setNumWorkers(NUM_WORKERS));
         stc.execute();
 
         Assert.assertEquals(2, stc.getTriangleCount());
@@ -45,7 +42,7 @@ public class SimpleTriangleCountingComputationTest {
     @Test
     public void testSPV2() throws ParaGraphComputationException {
 
-        SimpleTriangleCountingAlgortihm stc = new SimpleTriangleCountingAlgortihm(graph1, new ComputationConfig().setNumWorkers(NUM_WORKERS));
+        SimpleTriangleCountingAlgorithm stc = new SimpleTriangleCountingAlgorithm(graph1, new ComputationConfig().setNumWorkers(NUM_WORKERS));
         stc.execute();
 
         Assert.assertEquals(0, stc.getTriangleCount());
@@ -54,7 +51,7 @@ public class SimpleTriangleCountingComputationTest {
     @Test
     public void testSPV3() throws ParaGraphComputationException {
 
-        SimpleTriangleCountingAlgortihm stc = new SimpleTriangleCountingAlgortihm(graph2, new ComputationConfig().setNumWorkers(NUM_WORKERS));
+        SimpleTriangleCountingAlgorithm stc = new SimpleTriangleCountingAlgorithm(graph2, new ComputationConfig().setNumWorkers(NUM_WORKERS));
         stc.execute();
 
         Assert.assertEquals(0, stc.getTriangleCount());

@@ -144,9 +144,9 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
 
 ```java
 
-public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Object, Object, Integer, String> {
+public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Object, Object, Integer, String> {
 
-    public SimpleTriangleCountingAlgortihm(GraphData<?, ?> graphData, ComputationConfig config) {
+    public SimpleTriangleCountingAlgorithm(GraphData<?, ?> graphData, ComputationConfig config) {
         super(graphData, config);
     }
 
@@ -227,7 +227,7 @@ Here we leave an example app illustrating  all the described functionalities:
 
 ```java
 
-import pt.ist.rc.paragraph.analytics.SimpleTriangleCountingAlgortihm;
+import pt.ist.rc.paragraph.analytics.SimpleTriangleCountingAlgorithm;
 import pt.ist.rc.paragraph.computation.ComputationConfig;
 import pt.ist.rc.paragraph.model.GraphData;
 
@@ -254,7 +254,7 @@ public class TestGraph {
         GraphData<Void, Void> graph = new GraphData<>(fData, f, f);
 
 
-        SimpleTriangleCountingAlgortihm stc = new SimpleTriangleCountingAlgortihm(graph, conf);
+        SimpleTriangleCountingAlgorithm stc = new SimpleTriangleCountingAlgorithm(graph, conf);
         stc.execute();
         
         System.out.println(stc.getTriangleCount());

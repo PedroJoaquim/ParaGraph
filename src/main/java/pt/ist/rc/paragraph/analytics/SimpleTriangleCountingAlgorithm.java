@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Pedro Joaquim on 27-10-2016
  */
-public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Object, Object, Integer, String> {
+public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Object, Object, Integer, String> {
 
 
     /**
@@ -21,7 +21,7 @@ public class SimpleTriangleCountingAlgortihm extends VertexCentricComputation<Ob
      * @param graph  Core graph data
      * @param config Computation configuration
      */
-    public SimpleTriangleCountingAlgortihm(Graph<?, ?> graph, ComputationConfig config) {
+    public SimpleTriangleCountingAlgorithm(Graph<?, ?> graph, ComputationConfig config) {
         super(graph, config);
     }
 
