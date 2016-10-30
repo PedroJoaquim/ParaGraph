@@ -25,7 +25,7 @@ public class GraphLoaderTest {
             "]";
 
     @Test
-    public void importBasicGML() throws IOException {
+    public void importBasicGMLFromString() throws IOException {
         Graph<Void, Void> graph = new GraphLoader<Void, Void>().fromString(GML_BASIC, x -> null, x -> null);
 
         Vertex<Void, Void> vertexA = graph.getVertexById("A").get();
@@ -38,5 +38,20 @@ public class GraphLoaderTest {
         Assert.assertEquals(1, vertexAOutEdges.size());
         Assert.assertTrue(vertexBOutEdges.isEmpty());
         Assert.assertSame(vertexB, graph.getVertices().get(edgeAB.getTargetIdx()));
+    }
+
+    @Test
+    public void importGMLFromFile() throws IOException {
+        Graph<Integer, Void> graph = new GraphLoader<Integer, Void>().fromFile("src/test/resources/people-sample.gml", Integer::parseInt, x -> null);
+
+        Vertex<Integer, Void> john = graph.getVertexById("879").get();
+        Vertex<Integer, Void> frank = graph.getVertexById("465").get();
+        Vertex<Integer, Void> pam = graph.getVertexById("321").get();
+
+        Edge<Void> edgePamJohn = pam.getOutEdges().get(0);
+
+        Assert.assertEquals(3, graph.getVertices().size());
+        Assert.assertSame(john, graph.getVertices().get(edgePamJohn.getTargetIdx()));
+        Assert.assertEquals(34, frank.getValue().intValue());
     }
 }
