@@ -236,7 +236,7 @@ import java.util.function.Function;
 
 public class TestGraph {
     public static void main(String[] args) {
-        const String filePath = "C:/users/test/documents/graph/graph1";
+        final String filePath = "C:/users/test/documents/graph/graph1";
 
         Function<String, Void> f = new Function<String, Void>() {
             @Override
