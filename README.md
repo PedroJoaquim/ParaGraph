@@ -35,7 +35,7 @@ The first parameter is a file path (a `String`) to the GML formated file holding
 The second and third parameter are `Function` objects that receive a `String` as input and return `VV` and `EV`, respectivly.
 
 Our GML parser implementation supports a special property named "value", on `node` and `edge` GML elements, that provides the ability to load values specific to your needs. The parser reads the "values" as `String` and, on loading this information to the `Graph`, invokes the `Function` objects.
-This is necessary because we don't know how to parse the input file properties into the objects that you put there.
+This is necessary because we don't know how to parse the "values" into the types that you need, so we delegate that to you, using a functional interface.
 
 An example usage could be:
 
