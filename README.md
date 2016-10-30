@@ -238,12 +238,7 @@ public class TestGraph {
     public static void main(String[] args) {
         final String filePath = "C:/users/test/documents/graph/graph1";
 
-        Function<String, Void> f = new Function<String, Void>() {
-            @Override
-            public Void apply(String s) {
-                return null;
-            }
-        };
+        Function<String, Void> f = x -> null;
 
         ComputationConfig conf = new ComputationConfig().setNumWorkers(5);
 
@@ -255,7 +250,6 @@ public class TestGraph {
 
         System.out.println(stc.getTriangleCount());
     }
-
 }
 
 
