@@ -32,7 +32,7 @@ The parameters refer to graph vertex's properties (VV) and edge's properties (EV
 In order to load a `Graph` from a GML formated file it is necessary to create a `GraphLoader<VV, EV>` instance.
 With this instance you need to call the `fromFile` method, supplying 3 parameters.
 The first parameter is a file path (a `String`) to the GML formated file holding the graph information.
-The second and third parameter are `Function` objects that receive a `String` as input and return `VV` and `EV`, respectivly.
+The second and third parameter are `Function` objects that receive a `String` as input and return `VV` and `EV`, respectively.
 
 Our GML parser implementation supports a special property named "value", on `node` and `edge` GML elements, that provides the ability to load values specific to your needs. The parser reads the "values" as `String` and, on loading this information to the `Graph`, invokes the `Function` objects.
 This is necessary because we don't know how to parse the "values" into the types that you need, so we delegate that to you, using a functional interface.
