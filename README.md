@@ -41,7 +41,7 @@ An example usage could be:
 
 ```java
   ...
-  const String filePath = "/usr/test/documents/graph/graph1.data";
+  final String filePath = "/usr/test/documents/graph/graph1.data";
 
    Function<String, Person> fPerson = new Function<String, Person>() {
        @Override
