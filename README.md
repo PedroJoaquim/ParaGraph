@@ -5,9 +5,9 @@ ParaGraph - Parallel Graph Processing Library [![Build Status](https://travis-ci
 
 **ParaGraph** is a simple, single machine, graph processing library.
 
-This systems aims at helping developers creating easy to use and parallelize graph algorithms that can run over a huge graph. The developed algorithms are based on the Google's Pregel "Think Like a Vertex" programming model and are execute under the Bulk Synchronous Parallel computational model.
+This systems aims at helping developers creating easy to use and parallelize graph algorithms that can run over a huge graph. The developed algorithms are based on the Google's Pregel "Think Like a Vertex" programming model and are executed under the Bulk Synchronous Parallel computational model.
 
-The computation runs by supersteps, every superstep a `compute()` function is executed in parallel at each vertex. Every vertex is able to update its value and send messages to its outgoing neighbors. Messages sent during superstep N will be available in superstep N+1. The computation ends when all vertices have called the `voteToHalt()` function. Vertices that vote to halt in one superstep  but receive messages in later supersteps are reactivated
+The computation runs by supersteps, every superstep a `compute()` function is executed in parallel at each vertex. Every vertex is able to update its value and send messages to its outgoing neighbors or vertices whose id is known. Messages sent during superstep N will be available in superstep N+1. The computation ends when all vertices have called the `voteToHalt()` function. Vertices that vote to halt in one superstep  but receive messages in later supersteps are reactivated
 
 ## How to Use
 
@@ -22,7 +22,7 @@ This can be achieved by running your project with the following command:
 
 Before starting executing algorithms on your graph data you need to be able to load it. To do so, you need to have a `Graph<VV, EV>` instance.
 
-This class will represent your graph data and can be used to execute multiple algorithms. This graph data is immutable so you are not able to change it, you can hava multiple instances of `Graph` though.
+This class will represent your graph data and can be used to execute multiple algorithms. This graph data is immutable so you are not able to change it, you can have multiple instances of `Graph` though.
 
 
 The Graph class is a generic type, parameterized by the `VV` and `EV` value types.
