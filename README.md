@@ -29,18 +29,19 @@ The Graph class is a generic type, parameterized by the `VV` and `EV` value type
 
 The parameters refer to graph vertex's properties (VV) and edge's properties (EV). For instance a directed graph from persons, with names and phone numbers, to other persons linked by an edge with a given weight could be loaded by a `Graph<Person, Integer>` instance. This data will then be available to you during algorithm execution.
 
-In order to create a `Graph` instance you will have to provide to the constructor 3 parameters.
+In order to load a `Graph` from a GML formated file it is necessary to create a `GraphLoader<VV, EV>` instance.
+With this instance you need to call the `fromFile` method, supplying 3 parameters.
+The first parameter is a file path (a `String`) to the GML formated file holding the graph information.
+The second and third parameter are `Function` objects that receive a `String` as input and return `VV` and `EV`, respectivly.
 
-The first parameter it's a `File` object referring to the file in your system storage holding the graph information
-
-The second and third parameter are `Function` objects that receive a `String` as input and return a `VV` and `EV` value correspondingly.
+Our GML parser implementation supports a special property named "value", on `node` and `edge` GML elements, that provides the ability to load values specific to your needs. The parser reads the "values" as `String` and, on loading this information to the `Graph`, invokes the `Function` objects.
 This is necessary because we don't know how to parse the input file properties into the objects that you put there.
 
 An example usage could be:
 
 ```java
   ...
-  File fData = new File("/usr/test/documents/graph/graph1.data");
+  const String filePath = "/usr/test/documents/graph/graph1.data";
 
    Function<String, Person> fPerson = new Function<String, Person>() {
        @Override
@@ -57,7 +58,7 @@ An example usage could be:
        }
    };
 
-  Graph<Person, Integer> graph = new Graph<>(fData, fPerson, fInteger);
+  Graph<Person, Integer> graph = new GraphLoader<Person, Integer>().fromFile(filePath, fPerson, fInteger);
   ...
 ```
 
@@ -231,16 +232,11 @@ import pt.ist.rc.paragraph.analytics.SimpleTriangleCountingAlgorithm;
 import pt.ist.rc.paragraph.computation.ComputationConfig;
 import pt.ist.rc.paragraph.model.Graph;
 
-import java.io.File;
 import java.util.function.Function;
 
 public class TestGraph {
-
-
     public static void main(String[] args) {
-
-
-        File fData = new File("C:/users/test/documents/graph/graph1");
+        const String filePath = "C:/users/test/documents/graph/graph1";
 
         Function<String, Void> f = new Function<String, Void>() {
             @Override
@@ -251,7 +247,7 @@ public class TestGraph {
 
         ComputationConfig conf = new ComputationConfig().setNumWorkers(5);
 
-        Graph<Void, Void> graph = new Graph<>(fData, f, f);
+        Graph<Void, Void> graph = new GraphLoader<Void, Void>().fromFile(filePath, f, f);
 
 
         SimpleTriangleCountingAlgorithm stc = new SimpleTriangleCountingAlgorithm(graph, conf);
