@@ -6,6 +6,7 @@ import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.Graph;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -87,6 +88,11 @@ public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Ob
         vertex.voteToHalt();
 
 
+    }
+
+    @Override
+    protected void masterCompute(Iterator<ComputationalVertex<?, ?, Integer, String>> iterator, HashMap<String, Object> globalValues) {
+        //do nothing
     }
 
 

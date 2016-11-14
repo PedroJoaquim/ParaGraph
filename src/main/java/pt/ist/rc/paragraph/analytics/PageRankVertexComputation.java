@@ -5,6 +5,9 @@ import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Graph;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 /**
  * Created by Pedro Joaquim on 17-10-2016
  */
@@ -47,5 +50,10 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
             
            vertex.voteToHalt();
         }
+    }
+
+    @Override
+    protected void masterCompute(Iterator<ComputationalVertex<?, ?, Double, Double>> iterator, HashMap<String, Object> globalValues) {
+        //do nothing
     }
 }

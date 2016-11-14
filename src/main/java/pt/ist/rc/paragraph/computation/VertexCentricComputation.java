@@ -1,5 +1,6 @@
 package pt.ist.rc.paragraph.computation;
 
+import pt.ist.rc.paragraph.exceptions.GlobalValueNotSetException;
 import pt.ist.rc.paragraph.exceptions.ParaGraphComputationException;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.Graph;
@@ -37,6 +38,11 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
     private HashSet<Integer> activeVertices;
 
     /**
+     * Global Values Map
+     */
+    private HashMap<String, Object> globalValues;
+
+    /**
      * Constructor
      *
      *  ? extends VV and ? extends EV are used in order to allow some algorithms that dont want a specific VV and EV value
@@ -56,6 +62,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
         this.numVertices = graph.getVertices().size();
         this.activeVertices = new HashSet<>();
         this.superStep = 0;
+        this.globalValues = new HashMap<>();
 
         computationalVertices =  new ArrayList<>(this.numVertices);
 
@@ -77,6 +84,12 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      */
     protected abstract void compute(ComputationalVertex<? extends VV, ? extends EV, VCV, MV> vertex);
 
+    /**
+     * Function executed between superstepns that has global vertex access
+     *
+     * @param iterator computational vertices iterator
+     */
+    protected abstract void masterCompute(Iterator<ComputationalVertex<? extends VV, ? extends EV, VCV, MV>> iterator, HashMap<String, Object> globalValues);
 
     /**
      *
@@ -108,6 +121,18 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
         }
     }
 
+    /**
+     *
+     * @param key - global value key
+     * @return object associated with key
+     */
+    protected Object getGlobalValue(String key){
+        if(!globalValues.containsKey(key)){
+            throw new GlobalValueNotSetException("The value associated with key: " + key + " is not set in the current computation");
+        }
+
+        return globalValues.get(key);
+    }
 
     /**
      *
@@ -137,6 +162,8 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
                 for (ParaGraphWorker worker : workers) {
                     worker.await();
                 }
+
+                masterCompute(computationalVertices.iterator(), globalValues);
 
                 activateVerticesThatReceivedMessages();
                 exchangeMessagesInboxes();

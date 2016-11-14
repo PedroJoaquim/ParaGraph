@@ -5,10 +5,7 @@ import pt.ist.rc.paragraph.computation.ComputationalVertex;
 import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Pedro Joaquim on 17-10-2016
@@ -52,6 +49,11 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Obj
                 vertex.voteToHalt();
             }
         }
+    }
+
+    @Override
+    protected void masterCompute(Iterator<ComputationalVertex<?, ?, Integer, Integer>> iterator, HashMap<String, Object> globalValues) {
+        //do nothing
     }
 
     public Map<Integer, List<Integer>> getVerticesGroups(){

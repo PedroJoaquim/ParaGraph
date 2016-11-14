@@ -6,6 +6,7 @@ import pt.ist.rc.paragraph.computation.VertexCentricComputation;
 import pt.ist.rc.paragraph.model.Edge;
 import pt.ist.rc.paragraph.model.Graph;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -48,6 +49,11 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Obje
         }
 
         vertex.voteToHalt();
+    }
+
+    @Override
+    protected void masterCompute(Iterator<ComputationalVertex<?, ? extends Integer, Integer, Integer>> iterator, HashMap<String, Object> globalValues) {
+        //do nothing
     }
 
     private int shortestDistance(int mindist, int msg) {
