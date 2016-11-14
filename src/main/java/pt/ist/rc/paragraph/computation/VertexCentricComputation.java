@@ -68,7 +68,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
 
         for (int i = 0; i < numVertices; i++) {
             this.activeVertices.add(i);
-            this.computationalVertices.add(i, new ComputationalVertex<>(i, initializeValue(i), graph.getVertex(i), activeVertices));
+            this.computationalVertices.add(i, new ComputationalVertex<>(i, null, graph.getVertex(i), activeVertices));
         }
     }
 
@@ -152,6 +152,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
         try{
             ParaGraphWorker[] workers = new ParaGraphWorker[config.getNumWorkers()];
             initializeWorkers(workers);
+            initializeComputationalValues();
 
             while(!activeVertices.isEmpty()){
 
@@ -173,6 +174,12 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
             throw new ParaGraphComputationException(e.getMessage());
         }
 
+    }
+
+    private void initializeComputationalValues() {
+        for (ComputationalVertex v : this.computationalVertices) {
+            v.setComputationalValue(initializeValue(v.getId()));
+        }
     }
 
     /**
