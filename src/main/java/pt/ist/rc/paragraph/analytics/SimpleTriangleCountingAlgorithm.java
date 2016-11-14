@@ -95,6 +95,11 @@ public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Ob
         //do nothing
     }
 
+    @Override
+    protected void initializeGlobalObjects(HashMap<String, Object> globalObjects) {
+        //do nothing
+    }
+
 
     public int getTriangleCount(){
         return getVertexComputationalValues().stream().mapToInt(Integer::intValue).sum();

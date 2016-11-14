@@ -56,4 +56,9 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
     protected void masterCompute(Iterator<ComputationalVertex<?, ?, Double, Double>> iterator, HashMap<String, Object> globalValues) {
         //do nothing
     }
+
+    @Override
+    protected void initializeGlobalObjects(HashMap<String, Object> globalObjects) {
+        //do nothing
+    }
 }

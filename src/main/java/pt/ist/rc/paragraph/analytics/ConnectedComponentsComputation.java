@@ -56,6 +56,11 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Obj
         //do nothing
     }
 
+    @Override
+    protected void initializeGlobalObjects(HashMap<String, Object> globalObjects) {
+        //do nothing
+    }
+
     public Map<Integer, List<Integer>> getVerticesGroups(){
 
         Map<Integer, List<Integer>> result = new HashMap<>();

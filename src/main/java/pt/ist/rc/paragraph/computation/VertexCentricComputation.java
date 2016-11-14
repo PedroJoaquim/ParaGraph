@@ -91,6 +91,9 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      */
     protected abstract void masterCompute(Iterator<ComputationalVertex<? extends VV, ? extends EV, VCV, MV>> iterator, HashMap<String, Object> globalValues);
 
+
+    protected abstract void initializeGlobalObjects(HashMap<String, Object> globalObjects);
+
     /**
      *
      * @return Core graph number of vertices
@@ -151,7 +154,9 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
 
         try{
             ParaGraphWorker[] workers = new ParaGraphWorker[config.getNumWorkers()];
+
             initializeWorkers(workers);
+            initializeGlobalObjects(globalValues);
             initializeComputationalValues();
 
             while(!activeVertices.isEmpty()){

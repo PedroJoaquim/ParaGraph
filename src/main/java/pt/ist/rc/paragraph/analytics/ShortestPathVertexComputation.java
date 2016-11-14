@@ -56,6 +56,11 @@ public class ShortestPathVertexComputation extends VertexCentricComputation<Obje
         //do nothing
     }
 
+    @Override
+    protected void initializeGlobalObjects(HashMap<String, Object> globalObjects) {
+        //do nothing
+    }
+
     private int shortestDistance(int mindist, int msg) {
         if(mindist == INF) return msg;
         else {
