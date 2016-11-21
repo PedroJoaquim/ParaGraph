@@ -7,6 +7,7 @@ import pt.ist.rc.paragraph.model.Graph;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Pedro Joaquim on 17-10-2016
@@ -53,7 +54,7 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
     }
 
     @Override
-    protected void masterCompute(Iterator<ComputationalVertex<?, ?, Double, Double>> iterator, HashMap<String, Object> globalValues) {
+    protected void masterCompute(List<ComputationalVertex<?, ?, Double, Double>> iterator, HashMap<String, Object> globalValues) {
         //do nothing
     }
 

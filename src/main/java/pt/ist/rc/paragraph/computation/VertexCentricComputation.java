@@ -89,7 +89,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
      *
      * @param iterator computational vertices iterator
      */
-    protected abstract void masterCompute(Iterator<ComputationalVertex<? extends VV, ? extends EV, VCV, MV>> iterator, HashMap<String, Object> globalValues);
+    protected abstract void masterCompute(List<ComputationalVertex<? extends VV, ? extends EV, VCV, MV>> iterator, HashMap<String, Object> globalValues);
 
 
     protected abstract void initializeGlobalObjects(HashMap<String, Object> globalObjects);
@@ -169,7 +169,7 @@ public abstract class VertexCentricComputation<VV, EV, VCV, MV> {
                     worker.await();
                 }
 
-                masterCompute(computationalVertices.iterator(), globalValues);
+                masterCompute(computationalVertices, globalValues);
 
                 activateVerticesThatReceivedMessages();
                 exchangeMessagesInboxes();

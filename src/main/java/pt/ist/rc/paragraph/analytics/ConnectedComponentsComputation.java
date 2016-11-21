@@ -52,9 +52,10 @@ public class ConnectedComponentsComputation extends VertexCentricComputation<Obj
     }
 
     @Override
-    protected void masterCompute(Iterator<ComputationalVertex<?, ?, Integer, Integer>> iterator, HashMap<String, Object> globalValues) {
+    protected void masterCompute(List<ComputationalVertex<?, ?, Integer, Integer>> iterator, HashMap<String, Object> globalValues) {
         //do nothing
     }
+
 
     @Override
     protected void initializeGlobalObjects(HashMap<String, Object> globalObjects) {

@@ -91,7 +91,7 @@ public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Ob
     }
 
     @Override
-    protected void masterCompute(Iterator<ComputationalVertex<?, ?, Integer, String>> iterator, HashMap<String, Object> globalValues) {
+    protected void masterCompute(List<ComputationalVertex<?, ?, Integer, String>> iterator, HashMap<String, Object> globalValues) {
         //do nothing
     }
 
