@@ -74,6 +74,50 @@ public class Graph<VV, EV> {
         }
     }
 
+    public static class BuilderEdges<VV, EV> extends Builder<VV, EV> {
+        private final ArrayList<Vertex.Builder<VV, EV>> pVertices;
+        private int maxToIdx;
+
+        public BuilderEdges() {
+            this.pVertices = new ArrayList<>();
+        }
+
+        public BuilderEdges(int nVertices) {
+            this.pVertices = new ArrayList<>(nVertices);
+        }
+
+        public BuilderEdges<VV, EV> addEdge(int fromIdx, int toIdx) {
+            this.maxToIdx = Math.max(this.maxToIdx, toIdx);
+            fillUntilIdx(fromIdx); // TODO: compare performance of this vs fillUntilIdx(max(from, to)) ?
+
+            Vertex.Builder<VV, EV> fromVertex = this.pVertices.get(fromIdx);
+
+            Edge<EV> edge = new Edge.Builder<EV>().targetIdx(toIdx).build();
+
+            fromVertex.addEdge(edge);
+
+            return this;
+        }
+
+        public Graph<VV, EV> build() {
+            fillUntilIdx(this.maxToIdx);
+
+            List<Vertex<VV, EV>> vertices = pVertices.stream()
+                    .map(Vertex.Builder::build)
+                    .collect(Collectors.toList());
+
+            return new Graph<>(this, vertices);
+        }
+
+        private void fillUntilIdx(int untilIdx) {
+            this.pVertices.ensureCapacity(untilIdx + 1);
+
+            while (untilIdx >= this.pVertices.size()) {
+                this.pVertices.add(new Vertex.Builder<>());
+            }
+        }
+    }
+
     public static class BuilderWithIds<VV, EV> extends Builder<VV, EV> {
         private final List<Vertex.Builder<VV, EV>> pVertices;
         private final Map<String, Integer> vertexIdx;
