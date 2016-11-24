@@ -26,7 +26,7 @@ public class GraphLoaderTest {
 
     @Test
     public void importBasicGMLFromString() throws IOException {
-        Graph<Void, Void> graph = new GraphLoader<Void, Void>().fromString(GML_BASIC, x -> null, x -> null);
+        Graph<Void, Void> graph = new GraphLoader<Void, Void>().fromString(GML_BASIC, x -> null, x -> null, "gml");
 
         Vertex<Void, Void> vertexA = graph.getVertexById("A").get();
         Vertex<Void, Void> vertexB = graph.getVertexById("B").get();
@@ -42,7 +42,7 @@ public class GraphLoaderTest {
 
     @Test
     public void importGMLFromFile() throws IOException {
-        Graph<Integer, Void> graph = new GraphLoader<Integer, Void>().fromFile("src/test/resources/people-sample.gml", Integer::parseInt, x -> null);
+        Graph<Integer, Void> graph = new GraphLoader<Integer, Void>().fromFile("src/test/resources/people-sample.gml", Integer::parseInt, x -> null, "gml");
 
         Vertex<Integer, Void> john = graph.getVertexById("879").get();
         Vertex<Integer, Void> frank = graph.getVertexById("465").get();
