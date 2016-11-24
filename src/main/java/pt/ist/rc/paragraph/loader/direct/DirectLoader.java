@@ -29,7 +29,7 @@ public class DirectLoader<VV, EV> {
             for(String line = br.readLine(); line != null; line = br.readLine()) { // TODO: Check what happens when reader is empty
                 if (line.startsWith("#")) continue;
 
-                final String[] idxs = line.split(" ");
+                final String[] idxs = line.split("\\s");
 
                 int fromIdx = Integer.parseInt(idxs[0]);
                 int toIdx = Integer.parseInt(idxs[1]);
