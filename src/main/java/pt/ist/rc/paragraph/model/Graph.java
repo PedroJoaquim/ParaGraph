@@ -99,6 +99,13 @@ public class Graph<VV, EV> {
             return this;
         }
 
+        public BuilderEdges<VV, EV> addUndirectedEdge(int idx1, int idx2) {
+            addEdge(idx1, idx2);
+            addEdge(idx2, idx1);
+
+            return this;
+        }
+
         public Graph<VV, EV> build() {
             fillUntilIdx(this.maxToIdx);
 

@@ -24,6 +24,11 @@ public class DirectLoaderTest {
             "2\t3\n" +
             "2\t4\n";
 
+    private static final String UNDIRECTED =
+            "!UNDIRECTED\n" +
+            "0\t3\n" +
+            "1\t2\n";
+
     @Test
     public void importBasicDirect() throws IOException {
         Reader directReader = new StringReader(DIRECT_BASIC);
@@ -75,5 +80,29 @@ public class DirectLoaderTest {
         Assert.assertTrue(vertex2OutIdxs.contains(3));
         Assert.assertTrue(vertex2OutIdxs.contains(4));
         Assert.assertFalse(vertex2OutIdxs.contains(2));
+    }
+
+    @Test
+    public void importUndirected() throws IOException {
+        Reader undirectedReader = new StringReader(UNDIRECTED);
+        DirectLoader<Void, Void> loader = new DirectLoader<>(undirectedReader);
+
+        Graph<Void, Void> graph = loader.load();
+
+        Vertex<Void, Void> vertex0 = graph.getVertex(0);
+        Vertex<Void, Void> vertex1 = graph.getVertex(1);
+        Vertex<Void, Void> vertex2 = graph.getVertex(2);
+        Vertex<Void, Void> vertex3 = graph.getVertex(3);
+
+        final Set<Integer> vertex0OutIdxs = vertex0.getOutEdges().stream().map(edge -> edge.getTargetIdx()).collect(Collectors.toSet());
+        final Set<Integer> vertex1OutIdxs = vertex1.getOutEdges().stream().map(edge -> edge.getTargetIdx()).collect(Collectors.toSet());
+        final Set<Integer> vertex2OutIdxs = vertex2.getOutEdges().stream().map(edge -> edge.getTargetIdx()).collect(Collectors.toSet());
+        final Set<Integer> vertex3OutIdxs = vertex3.getOutEdges().stream().map(edge -> edge.getTargetIdx()).collect(Collectors.toSet());
+
+        Assert.assertTrue(vertex0OutIdxs.contains(3));
+        Assert.assertTrue(vertex3OutIdxs.contains(0));
+
+        Assert.assertTrue(vertex1OutIdxs.contains(2));
+        Assert.assertTrue(vertex2OutIdxs.contains(1));
     }
 }

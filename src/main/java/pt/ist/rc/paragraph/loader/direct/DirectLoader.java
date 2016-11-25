@@ -23,18 +23,40 @@ public class DirectLoader<VV, EV> {
     }
 
     public Graph<VV, EV> load() throws IOException {
+        boolean directed = true;
         Graph.BuilderEdges<VV, EV> partialGraph = new Graph.BuilderEdges<>();
 
         try(BufferedReader br = new BufferedReader(r)) {
-            for(String line = br.readLine(); line != null; line = br.readLine()) { // TODO: Check what happens when reader is empty
+            String line = br.readLine();
+
+            for (; line != null && (line.startsWith("#") || line.startsWith("!")); line = br.readLine()) {
                 if (line.startsWith("#")) continue;
 
-                final String[] idxs = line.split("\t");
+                if (line.startsWith("!UNDIRECTED")) {
+                    directed = false;
+                }
+            }
 
-                int fromIdx = Integer.parseInt(idxs[0]);
-                int toIdx = Integer.parseInt(idxs[1]);
+            // TODO: improve directed/undirected code and measure performance
+            if (directed) {
+                for (; line != null; line = br.readLine()) { // TODO: Check what happens when reader is empty
+                    final String[] idxs = line.split("\t");
 
-                partialGraph.addEdge(fromIdx, toIdx);
+                    int fromIdx = Integer.parseInt(idxs[0]);
+                    int toIdx = Integer.parseInt(idxs[1]);
+
+                    partialGraph.addEdge(fromIdx, toIdx);
+                }
+            }
+            else {
+                for (; line != null; line = br.readLine()) { // TODO: Check what happens when reader is empty
+                    final String[] idxs = line.split("\t");
+
+                    int fromIdx = Integer.parseInt(idxs[0]);
+                    int toIdx = Integer.parseInt(idxs[1]);
+
+                    partialGraph.addUndirectedEdge(fromIdx, toIdx);
+                }
             }
         }
 
