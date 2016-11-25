@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 
 public class DirectLoaderTest {
     private static final String DIRECT_BASIC = "# This is just a comment\n" +
-            "0 1\n" +
-            "0 2\n" +
-            "1 0\n" +
-            "2 1\n";
+            "0\t1\n" +
+            "0\t2\n" +
+            "1\t0\n" +
+            "2\t1\n";
 
     private static final String DIRECT_FAN =
-            "2 0\n" +
-            "2 1\n" +
-            "2 3\n" +
-            "2 4\n";
+            "2\t0\n" +
+            "2\t1\n" +
+            "2\t3\n" +
+            "2\t4\n";
 
     @Test
     public void importBasicDirect() throws IOException {
