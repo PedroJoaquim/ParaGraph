@@ -43,7 +43,7 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
             vertex.setComputationalValue((0.15 / getNumVertices()) + 0.85 * sum);
         }
 
-        if(getSuperStep() < superstepNumber){
+        if(getSuperStep() < 30){
 
             sendMessageToAllOutNeighbors(vertex, vertex.getComputationalValue() / numOutEdges);
 
@@ -61,5 +61,22 @@ public class PageRankVertexComputation extends VertexCentricComputation<Object, 
     @Override
     protected void initializeGlobalObjects(HashMap<String, Object> globalObjects) {
         //do nothing
+    }
+
+    public int getHighestRankNodeID(){
+
+        int index = 0;
+        double maxVal = -1;
+        List<Double> vertexComputationalValues = getVertexComputationalValues();
+
+        for (int i = 0; i < vertexComputationalValues.size() ; i++) {
+
+            if(vertexComputationalValues.get(i) > maxVal){
+                maxVal = vertexComputationalValues.get(i);
+                index = i;
+            }
+        }
+
+        return index;
     }
 }

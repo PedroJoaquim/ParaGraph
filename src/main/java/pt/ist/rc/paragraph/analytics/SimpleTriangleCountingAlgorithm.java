@@ -47,7 +47,6 @@ public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Ob
                     sendMessageTo(edge.getTargetIdx(), String.valueOf(vertex.getId()));
                 }
             }
-
         } else if (getSuperStep() == 1) {
 
             Iterator<? extends Edge<?>> iterator = vertex.getOutEdgesIterator();
@@ -64,8 +63,6 @@ public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Ob
                     }
                 }
             }
-
-
         } else {
 
             for (String msg : vertex.getMessages()) {
@@ -86,8 +83,6 @@ public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Ob
         }
 
         vertex.voteToHalt();
-
-
     }
 
     @Override
