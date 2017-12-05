@@ -5,7 +5,7 @@ ParaGraph - Parallel Graph Processing Library [![Build Status](https://travis-ci
 
 **ParaGraph** is a simple, single machine, graph processing library.
 
-This systems aims at helping developers creating easy to use and parallelize graph algorithms that can run over a huge graph. The developed algorithms are based on the Google's Pregel "Think Like a Vertex" programming model and are executed under the Bulk Synchronous Parallel computational model.
+This library aims at helping developers create easy to use and parallelize graph algorithms that run over huge graphs. The developed algorithms are based on the Google's Pregel "Think Like a Vertex" programming model and are executed under the Bulk Synchronous Parallel computational model.
 
 The computation runs by supersteps, every superstep a `compute()` function is executed in parallel at each vertex. Every vertex is able to update its value and send messages to its outgoing neighbors or vertices whose id is known. Messages sent during superstep N will be available in superstep N+1. The computation ends when all vertices have called the `voteToHalt()` function. Vertices that vote to halt in one superstep  but receive messages in later supersteps are reactivated
 
@@ -14,9 +14,9 @@ The computation runs by supersteps, every superstep a `compute()` function is ex
 ### Add Project to CLASSPATH
 
 The first step is to add our _ParaGraph*.jar_ file to you project _CLASSPATH_.
-This can be achieved by running your project with the following command:
+This can be achieved by running your application with the following command:
 
-`java -cp "/path/to/jar/Paragraph*.jar" your.project.MainClass`
+`java -cp "/path/to/jar/Paragraph*.jar" your.app.MainClass`
 
 ### Loading the Graph
 
@@ -31,7 +31,7 @@ The parameters refer to graph vertex's properties (VV) and edge's properties (EV
 
 In order to load a `Graph` from a GML formated file it is necessary to create a `GraphLoader<VV, EV>` instance.
 With this instance you need to call the `fromFile` method, supplying 3 parameters.
-The first parameter is a file path (a `String`) to the GML formated file holding the graph information.
+The first parameter is the file path (a `String`) to the GML formated file holding the graph information.
 The second and third parameter are `Function` objects that receive a `String` as input and return `VV` and `EV`, respectively.
 
 Our GML parser implementation supports a special property named "value", on `node` and `edge` GML elements, that provides the ability to load values specific to your needs. The parser reads the "values" as `String` and, on loading this information to the `Graph`, invokes the `Function` objects.
@@ -96,7 +96,7 @@ The `initialize(int vertexID)` function defines a initial value to the vertices 
 
 #### Putting it all together
 
-here we give concrete examples of algorithms representing our implementation of the pagerank and triangle counting algorithms.
+Here we give concrete examples of algorithms representing our implementation of the pagerank and triangle counting algorithms.
 More algorithms can be found at the _analytics_ package
 
 ```java
@@ -221,7 +221,7 @@ public class SimpleTriangleCountingAlgorithm extends VertexCentricComputation<Ob
 
 ### Executing Algorithms
 
-Once you have loaded the graph data and created your own algorithm, or decided to use one of ours already implemented algorithms, you are ready to put things moving.
+Once you have loaded the graph data and created your own algorithm, or decided to use one of the already implemented algorithms, you are ready to put things moving.
 
 Here we leave an example app illustrating  all the described functionalities:
 
